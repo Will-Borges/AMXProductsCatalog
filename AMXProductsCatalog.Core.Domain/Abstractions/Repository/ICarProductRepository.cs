@@ -8,5 +8,6 @@ namespace AMXProductsCatalog.Core.Domain.Abstractions.Repository
         Task<CarProductEntity[]> GetAllCars(int pageSize, int pageNumber);
         Task<CarProductEntity> GetCarById(long id);
         Task<bool> DeleteCarById(long id);
+        Task<bool> UpdateCar(CarProductEntity updatedCar);
     }
 }

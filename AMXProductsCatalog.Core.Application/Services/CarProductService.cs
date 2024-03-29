@@ -6,6 +6,7 @@ namespace AMXProductsCatalog.Core.Application.Services
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
     using AMXProductsCatalog.Core.Domain.Domains.Products;
     using AMXProductsCatalog.Core.Domain.Domains.Products.GetProduct;
+    using AMXProductsCatalog.Core.Domain.Domains.Products.UpdateCar;
     using AMXProductsCatalog.Core.Domain.Entities.Products;
 
     public class CarProductService : ICarProductService
@@ -47,6 +48,14 @@ namespace AMXProductsCatalog.Core.Application.Services
         public async Task<bool> DeleteCarProductById(long id)
         {
             var deleteWithSucess = await _carProductRepository.DeleteCarById(id);
+            return deleteWithSucess;
+        }
+
+        public async Task<bool> UpdateCarProduct(UpdateCarProductRequest carRequest)
+        {
+            var carEntity = _mapper.Map<CarProductEntity>(carRequest);
+
+            var deleteWithSucess = await _carProductRepository.UpdateCar(carEntity);
             return deleteWithSucess;
         }
     }

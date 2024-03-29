@@ -3,7 +3,8 @@
 namespace AMXProductsCatalog.Controllers.Products
 {
     using AMXProductsCatalog.Presenters.Interfaces;
-    using AMXProductsCatalog.Views.CreateProduct.Request;
+    using AMXProductsCatalog.Views.Products.CreateCar.Request;
+    using AMXProductsCatalog.Views.Products.UpdateCar.Request;
 
     [Route("v1/CarProduct")]
     [ApiController]
@@ -67,6 +68,20 @@ namespace AMXProductsCatalog.Controllers.Products
             {
                 var deleteWithSucess = await _carProductPresenter.DeleteCarProductById(id);
                 return Ok(deleteWithSucess);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("UpdateCarProduct")]
+        public async Task<IActionResult> UpdateCarProduct([FromBody] UpdateCarProductRequestDTO CarProductDto)
+        {
+            try
+            {
+                var updateWithSucess = await _carProductPresenter.UpdateCarProduct(CarProductDto);
+                return Ok(updateWithSucess);
             }
             catch (Exception e)
             {

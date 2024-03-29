@@ -1,4 +1,4 @@
-﻿namespace AMXProductsCatalog.Views.CreateProduct.Request
+﻿namespace AMXProductsCatalog.Views.Products.CreateCar.Request
 {
     public class CreateCarProductRequestDTO
     {

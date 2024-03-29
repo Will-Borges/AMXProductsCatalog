@@ -1,10 +1,11 @@
-﻿using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
-using AMXProductsCatalog.Core.Domain.Domains.Paginates;
-using AMXProductsCatalog.Core.Domain.Entities.Products;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys
 {
+    using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
+    using AMXProductsCatalog.Core.Domain.Domains.Paginates;
+    using AMXProductsCatalog.Core.Domain.Entities.Products;
+
     public class CarProductRepository : ICarProductRepository
     {
         public async Task<long> InsertCarProduct(CarProductEntity car)
@@ -35,15 +36,15 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys
             {
                 try
                 {
-                    var cars = context.Cars.OrderBy(c => c.Id).ToArray();
+                    var query = context.Cars.OrderBy(c => c.Id);
 
                     if (pageSize <= 0 || pageNumber <= 0)
                     {
-                        return cars;
+                        return await query.ToArrayAsync();
                     }
 
-                    var query = Pagination.GetPage(pageSize, pageNumber, cars);
-                    return query;
+                    var pagedQuery = Pagination.GetPage(pageSize, pageNumber, query);
+                    return await pagedQuery.ToArrayAsync();
                 }
                 catch (Exception ex)
                 {
@@ -60,21 +61,42 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys
             {
                 try
                 {
-                    return await context.Cars.FindAsync(id);
+                    var car = await context.Cars.FindAsync(id);
+
+                    if (car == null)
+                    {
+                        throw new InvalidOperationException("Car with id not found."); 
+                    }
+
+                    return car;
                 }
                 catch (Exception ex)
                 {
-                    throw new InvalidOperationException("Error when searching cars.");
+                    throw new InvalidOperationException("Error when searching query.");
                 }
             }
         }
 
-        public async Task UpdateCar(CarProductEntity updatedCar)
+        public async Task<bool> UpdateCar(CarProductEntity updatedCar)
         {
             using (var context = new AMXDbContext())
             {
-                context.Entry(updatedCar).State = EntityState.Modified;
-                await context.SaveChangesAsync();
+                try
+                {
+                    context.Entry(updatedCar).State = EntityState.Modified;
+                    int affectedRows = await context.SaveChangesAsync();
+
+                    if (affectedRows <= 0)
+                    {
+                        throw new InvalidOperationException("Car not found.");
+                    }
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException("Error when updating query.");
+                }
             }
         }
 

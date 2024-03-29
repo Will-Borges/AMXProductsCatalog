@@ -2,15 +2,15 @@
 {
     public static class Pagination
     {
-        public static T[] GetPage<T>(int pageSize, int pageNumber, T[]? query)
+        public static IQueryable<T> GetPage<T>(int pageSize, int pageNumber, IOrderedQueryable<T>? query)
         {
             if (query == null)
             {
-                return Array.Empty<T>();
+                return new List<T>().AsQueryable();
             }
 
             int skipCount = (pageNumber - 1) * pageSize;
-            var result = query.Skip(skipCount).Take(pageSize).ToArray();
+            var result = query.Skip(skipCount).Take(pageSize);
 
             return result;
         }

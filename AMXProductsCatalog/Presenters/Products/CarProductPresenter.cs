@@ -1,11 +1,14 @@
-﻿namespace AMXProductsCatalog.Presenters.Products
+﻿using AutoMapper;
+
+namespace AMXProductsCatalog.Presenters.Products
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Application.Services;
     using AMXProductsCatalog.Core.Domain.Domains.Products;
+    using AMXProductsCatalog.Core.Domain.Domains.Products.UpdateCar;
     using AMXProductsCatalog.Presenters.Interfaces;
-    using AMXProductsCatalog.Views.CreateProduct.Request;
-    using AMXProductsCatalog.Views.GetProduct.Response;
-    using AutoMapper;
+    using AMXProductsCatalog.Views.Products.CreateCar.Request;
+    using AMXProductsCatalog.Views.Products.GetCar.Response;
+    using AMXProductsCatalog.Views.Products.UpdateCar.Request;
 
     public class CarProductPresenter : ICarProductPresenter
     {
@@ -20,11 +23,11 @@
         }
 
 
-        public async Task<long> CreateCarProduct(CreateCarProductRequestDTO carRequestDTO)
+        public async Task<long> CreateCarProduct(CreateCarProductRequestDTO carRequestDto)
         {
-            ValidPriceCar(carRequestDTO.Price);
+            ValidPriceCar(carRequestDto.Price);
 
-            var car = _mapper.Map<CarProduct>(carRequestDTO);
+            var car = _mapper.Map<CarProduct>(carRequestDto);
 
             var carId = await _carProductService.CreateCarProduct(car);
             return carId;
@@ -50,6 +53,14 @@
         {
             var deleteWithSucess = await _carProductService.DeleteCarProductById(id);
             return deleteWithSucess;
+        }
+
+        public async Task<bool> UpdateCarProduct(UpdateCarProductRequestDTO carRequestDto)
+        {
+            var carsRequest = _mapper.Map<UpdateCarProductRequest>(carRequestDto);
+
+            var updateWithSucess = await _carProductService.UpdateCarProduct(carsRequest);
+            return updateWithSucess;
         }
 
         private void ValidPriceCar(decimal price)
