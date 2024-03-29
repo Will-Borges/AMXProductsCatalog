@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys
+namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
     using AMXProductsCatalog.Core.Domain.Domains.Paginates;
@@ -65,7 +65,7 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys
 
                     if (car == null)
                     {
-                        throw new InvalidOperationException("Car with id not found."); 
+                        return new CarProductEntity();
                     }
 
                     return car;
@@ -86,12 +86,7 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys
                     context.Entry(updatedCar).State = EntityState.Modified;
                     int affectedRows = await context.SaveChangesAsync();
 
-                    if (affectedRows <= 0)
-                    {
-                        throw new InvalidOperationException("Car not found.");
-                    }
-
-                    return true;
+                    return affectedRows > 0;
                 }
                 catch (Exception ex)
                 {
@@ -109,7 +104,7 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys
                     var car = await context.Cars.FindAsync(id);
                     if (car == null)
                     {
-                        throw new InvalidOperationException("Car not found.");
+                        return false;
                     }
 
                     context.Cars.Remove(car);

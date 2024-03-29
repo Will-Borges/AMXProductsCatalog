@@ -2,7 +2,7 @@
 
 namespace AMXProductsCatalog.Adapters.Persistence.Ioc
 {
-    using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys;
+    using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products;
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
 
     public static class AdapterModuleExtensions

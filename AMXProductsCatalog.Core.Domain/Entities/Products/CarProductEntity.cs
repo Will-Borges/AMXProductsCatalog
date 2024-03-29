@@ -9,6 +9,8 @@
         public decimal Price { get; set; }
 
 
+        public CarProductEntity() { }
+
         public CarProductEntity(long id, string brand, string model, int year, decimal price)
         {
             Id = id;

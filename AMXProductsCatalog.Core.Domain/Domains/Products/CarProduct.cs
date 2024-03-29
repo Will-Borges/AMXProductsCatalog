@@ -1,12 +1,10 @@
 ﻿namespace AMXProductsCatalog.Core.Domain.Domains.Products
 {
-    public class CarProduct
+    public class CarProduct : Product
     {
-        public long Id { get; }
         public string Brand { get; }
         public string Model { get; }
         public int Year { get; }
-        public decimal Price { get; }
 
 
         public CarProduct() { }
