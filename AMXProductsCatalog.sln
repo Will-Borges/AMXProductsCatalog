@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMXProductsCatalog", "AMXProductsCatalog\AMXProductsCatalog.csproj", "{E9F5BB74-1C54-4560-9068-7D91585DC4D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6AF83FDA-5348-4E79-BB07-AD80D9524299}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8485A7B0-530C-442E-BB74-82178480D2B9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{9F8A1320-FD53-4598-B66F-1A61094E302F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A2028F24-02D6-4742-8197-821D606F6DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMXProductsCatalog.Core.Application", "AMXProductsCatalog.Core.Application\AMXProductsCatalog.Core.Application.csproj", "{350D9CAE-BFF4-46B7-839D-86D8522388D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMXProductsCatalog.Core.Domain", "AMXProductsCatalog.Core.Domain\AMXProductsCatalog.Core.Domain.csproj", "{0431CBF4-C9DB-448E-B693-EFA1352204D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMXProductsCatalog.Adapters.Persistence", "AMXProductsCatalog.Adapters.Persistence\AMXProductsCatalog.Adapters.Persistence.csproj", "{7687AF33-115E-4D83-9F60-EC4C859E6666}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9F5BB74-1C54-4560-9068-7D91585DC4D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F5BB74-1C54-4560-9068-7D91585DC4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F5BB74-1C54-4560-9068-7D91585DC4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F5BB74-1C54-4560-9068-7D91585DC4D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{350D9CAE-BFF4-46B7-839D-86D8522388D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{350D9CAE-BFF4-46B7-839D-86D8522388D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{350D9CAE-BFF4-46B7-839D-86D8522388D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{350D9CAE-BFF4-46B7-839D-86D8522388D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0431CBF4-C9DB-448E-B693-EFA1352204D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0431CBF4-C9DB-448E-B693-EFA1352204D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0431CBF4-C9DB-448E-B693-EFA1352204D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0431CBF4-C9DB-448E-B693-EFA1352204D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7687AF33-115E-4D83-9F60-EC4C859E6666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7687AF33-115E-4D83-9F60-EC4C859E6666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7687AF33-115E-4D83-9F60-EC4C859E6666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7687AF33-115E-4D83-9F60-EC4C859E6666}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9F5BB74-1C54-4560-9068-7D91585DC4D6} = {9F8A1320-FD53-4598-B66F-1A61094E302F}
+		{350D9CAE-BFF4-46B7-839D-86D8522388D1} = {6AF83FDA-5348-4E79-BB07-AD80D9524299}
+		{0431CBF4-C9DB-448E-B693-EFA1352204D6} = {6AF83FDA-5348-4E79-BB07-AD80D9524299}
+		{7687AF33-115E-4D83-9F60-EC4C859E6666} = {8485A7B0-530C-442E-BB74-82178480D2B9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B364E41B-0B80-43AC-9646-A92A3294958A}
+	EndGlobalSection
+EndGlobal
