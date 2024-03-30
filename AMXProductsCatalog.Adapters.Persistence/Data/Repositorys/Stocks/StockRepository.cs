@@ -1,39 +1,47 @@
 ﻿namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Stocks
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
+    using AMXProductsCatalog.Core.Domain.Domains.Products;
     using AMXProductsCatalog.Core.Domain.Entities.Stocks;
 
     public class StockRepository : IStockRepository
     {
-        public async Task<long> InsertStockItem<TProduct>(StockItemEntity<TProduct> stockItem)
+        private readonly AMXDbContext _context;
+
+
+        public StockRepository(AMXDbContext context)
         {
-            using (var context = new AMXDbContext())
-            {
-                try
-                {
-                    await context.Database.EnsureCreatedAsync();
-
-                    stockItem.Id = GenerateUniqueId(context);
-
-                    var stockEntity = GetStockSet(context);
-
-                    var stockItemObject = CreateStockItemEntity(stockItem);
-
-                    stockEntity.StockItems.Add(stockItemObject);
-
-                    await context.SaveChangesAsync();
-                    return stockItem.Id;
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("Error inserting stock item.", ex);
-                }
-            }
+            _context = context;
         }
 
-        private static StockItemEntity<object> CreateStockItemEntity<TProduct>(StockItemEntity<TProduct> stockItem)
+
+        public async Task<long> InsertStockItem(StockItemEntity<Product> stockItem)
         {
-            var stockItemObject = new StockItemEntity<object>(
+            try
+            {
+                await _context.Database.EnsureCreatedAsync();
+
+                stockItem.Id = GenerateUniqueId();
+
+                var stockEntity = GetStockSet();
+
+                var stockItemObject = CreateStockItemEntity(stockItem);
+
+                stockEntity.StockItems.Add(stockItemObject);
+
+                await _context.SaveChangesAsync();
+                return stockItem.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error inserting stock item.");
+            }
+
+        }
+
+        private static StockItemEntity<Product> CreateStockItemEntity(StockItemEntity<Product> stockItem)
+        {
+            var stockItemObject = new StockItemEntity<Product>(
                     stockItem.Id,
                     stockItem.Product,
                     stockItem.Quantity,
@@ -42,15 +50,15 @@
             return stockItemObject;
         }
 
-        private static StockEntity GetStockSet(AMXDbContext context)
+        private StockEntity GetStockSet()
         {
-            var stockSet = context.Set<StockEntity>();
+            var stockSet = _context.Set<StockEntity>();
 
             var stockEntity = stockSet.FirstOrDefault();
 
             if (VerifyIfStockEntityExist(stockEntity))
             {
-                stockEntity = new StockEntity();
+                stockEntity = new StockEntity(1);
                 stockSet.Add(stockEntity);
             }
 
@@ -62,14 +70,14 @@
             return stockEntity == null;
         }
 
-        private long GenerateUniqueId(AMXDbContext context) //Criar generico
+        private long GenerateUniqueId() //Criar generico
         {
-            if (!context.Stocks.Any())
+            if (!_context.Stocks.Any())
             {
                 return 1;
             }
 
-            long id = context.Cars.Max(q => q.Id) + 1;
+            long id = _context.Cars.Max(q => q.Id) + 1;
             return id;
         }
 

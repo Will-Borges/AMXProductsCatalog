@@ -8,26 +8,31 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
 
     public class CarProductRepository : ICarProductRepository
     {
+        private readonly AMXDbContext _context;
+
+        public CarProductRepository(AMXDbContext context)
+        {
+            _context = context;
+        }
+
         public async Task<long> InsertCarProduct(CarProductEntity car)
         {
-            using (var context = new AMXDbContext())
+            try
             {
-                try
-                {
-                    await context.Database.EnsureCreatedAsync();
+                await _context.Database.EnsureCreatedAsync();
 
-                    car.Id = GenerateUniqueId(context);
+                car.Id = GenerateUniqueId(_context);
 
-                    context.Cars.Add(car);
+                _context.Cars.Add(car);
 
-                    await context.SaveChangesAsync();
-                    return car.Id;
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("Error inserting car.");
-                }
+                await _context.SaveChangesAsync();
+                return car.Id;
             }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error inserting car.");
+            }
+
         }
 
         public async Task<CarProductEntity[]> GetAllCars(int pageSize, int pageNumber)

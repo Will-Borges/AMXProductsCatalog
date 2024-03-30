@@ -1,4 +1,6 @@
-﻿namespace AMXProductsCatalog.Core.Domain.Domains.Products
+﻿using AMXProductsCatalog.Core.Domain.Domains.Generics.UniqueIds;
+
+namespace AMXProductsCatalog.Core.Domain.Domains.Products
 {
     public class CarProduct : Product
     {

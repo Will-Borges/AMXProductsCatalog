@@ -17,19 +17,19 @@ namespace AMXProductsCatalog.Controllers.Stocks
         }
 
 
-        [HttpPost("CreateCarProduct")]
-        public async Task<IActionResult> CreateCarProduct([FromBody] CreateCarProductRequestDTO CarProductDto)
-        {
-            try
-            {
-                var productCode = await _carProductPresenter.CreateCarProduct(CarProductDto);
-                return Ok(productCode);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        //[HttpPost("CreateCarProduct")]
+        //public async Task<IActionResult> CreateCarProduct([FromBody] CreateCarProductRequestDTO CarProductDto)
+        //{
+        //    try
+        //    {
+        //        var productCode = await _carProductPresenter.CreateCarProduct(CarProductDto);
+        //        return Ok(productCode);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return BadRequest(e.Message);
+        //    }
+        //}
 
         /*
             Listar Todos os Itens de Estoque:

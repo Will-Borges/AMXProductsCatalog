@@ -8,24 +8,32 @@ namespace AMXProductsCatalog.Core.Application.Services
     using AMXProductsCatalog.Core.Domain.Domains.Products.GetProduct;
     using AMXProductsCatalog.Core.Domain.Domains.Products.UpdateCar;
     using AMXProductsCatalog.Core.Domain.Entities.Products;
+    using AMXProductsCatalog.Core.Domain.Entities.Stocks;
 
     public class CarProductService : ICarProductService
     {
         private readonly IMapper _mapper;
         private readonly ICarProductRepository _carProductRepository;
+        private readonly IStockRepository _stockRepository;
 
 
-        public CarProductService(IMapper mapper, ICarProductRepository carProductRepository)
+        public CarProductService(
+            IMapper mapper,
+            ICarProductRepository carProductRepository,
+            IStockRepository stockRepository)
         {
             _mapper = mapper;
             _carProductRepository = carProductRepository;
+            _stockRepository = stockRepository;
         }
 
         public async Task<long> CreateCarProduct(CarProduct carProduct)
         {
-            var car = _mapper.Map<CarProductEntity>(carProduct);
+            var carEntity = _mapper.Map<CarProductEntity>(carProduct);
 
-            var carId = await _carProductRepository.InsertCarProduct(car);
+            var carId = await _carProductRepository.InsertCarProduct(carEntity);
+            await InsertStockItem(carEntity);
+
             return carId;
         }
 
@@ -57,6 +65,12 @@ namespace AMXProductsCatalog.Core.Application.Services
 
             var deleteWithSucess = await _carProductRepository.UpdateCar(carEntity);
             return deleteWithSucess;
+        }
+
+        private async Task InsertStockItem(CarProductEntity carEntity)
+        {
+            var carStockItem = new StockItemEntity<CarProductEntity>(carEntity, DateTimeOffset.Now);
+            await _stockRepository.InsertStockItem(carStockItem);
         }
     }
 }

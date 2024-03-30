@@ -2,7 +2,6 @@
 
 namespace AMXProductsCatalog.Adapters.Persistence.Data
 {
-    using AMXProductsCatalog.Core.Domain.Domains.Stocks;
     using AMXProductsCatalog.Core.Domain.Entities.Products;
     using AMXProductsCatalog.Core.Domain.Entities.Stocks;
 
