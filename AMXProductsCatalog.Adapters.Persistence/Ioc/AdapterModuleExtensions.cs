@@ -11,8 +11,6 @@ namespace AMXProductsCatalog.Adapters.Persistence.Ioc
     {
         public static IServiceCollection AddPersistenceRepositories(this IServiceCollection services)
         {
-            services.AddScoped<AMXDbContext>();
-
             services.AddScoped<ICarProductRepository, CarProductRepository>();
             services.AddScoped<IStockRepository, StockRepository>();
 

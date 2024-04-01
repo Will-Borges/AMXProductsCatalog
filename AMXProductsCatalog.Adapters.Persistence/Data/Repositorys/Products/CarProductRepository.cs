@@ -3,29 +3,23 @@
 namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
+    using AMXProductsCatalog.Core.Domain.Domains.Generics.Ramdom;
     using AMXProductsCatalog.Core.Domain.Domains.Paginates;
     using AMXProductsCatalog.Core.Domain.Entities.Products;
 
     public class CarProductRepository : ICarProductRepository
     {
-        private readonly AMXDbContext _context;
-
-        public CarProductRepository(AMXDbContext context)
+        public CarProductRepository()
         {
-            _context = context;
         }
 
         public async Task<long> InsertCarProduct(CarProductEntity car)
         {
             try
             {
-                await _context.Database.EnsureCreatedAsync();
+                car.Id = RandomIdGenerator.GenerateId();
+                AMXDatabase.Cars.Add(car);
 
-                car.Id = GenerateUniqueId(_context);
-
-                _context.Cars.Add(car);
-
-                await _context.SaveChangesAsync();
                 return car.Id;
             }
             catch (Exception ex)
@@ -37,102 +31,83 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
 
         public async Task<CarProductEntity[]> GetAllCars(int pageSize, int pageNumber)
         {
-            using (var context = new AMXDbContext())
+            try
             {
-                try
+                //IOrderedQueryable
+                //var query = (IOrderedQueryable<CarProductEntity>)AMXDatabase.Cars.OrderBy(c => c.Id);
+                IQueryable<CarProductEntity> query = AMXDatabase.Cars.AsQueryable().OrderBy(c => c.Id);
+                
+                if (pageSize <= 0 || pageNumber <= 0)
                 {
-                    var query = context.Cars.OrderBy(c => c.Id);
-
-                    if (pageSize <= 0 || pageNumber <= 0)
-                    {
-                        return await query.ToArrayAsync();
-                    }
-
-                    var pagedQuery = Pagination.GetPage(pageSize, pageNumber, query);
-                    return await pagedQuery.ToArrayAsync();
+                    return query.ToArray();
                 }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("Error when searching all cars.");
-                }
+
+                var pagedQuery = Pagination.GetPage(pageSize, pageNumber, query);
+                return pagedQuery.ToArray();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error when searching all cars.");
             }
         }
 
-        //----------
-
         public async Task<CarProductEntity> GetCarById(long id)
         {
-            using (var context = new AMXDbContext())
+            try
             {
-                try
-                {
-                    var car = await context.Cars.FindAsync(id);
+                var car = AMXDatabase.Cars.FirstOrDefault(q => q.Id == id);
 
-                    if (car == null)
-                    {
-                        return new CarProductEntity();
-                    }
-
-                    return car;
-                }
-                catch (Exception ex)
+                if (car == null)
                 {
-                    throw new InvalidOperationException("Error when searching query.");
+                    return new CarProductEntity();
                 }
+
+                return car;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error when searching query.");
             }
         }
 
         public async Task<bool> UpdateCar(CarProductEntity updatedCar)
         {
-            using (var context = new AMXDbContext())
+            try
             {
-                try
-                {
-                    context.Entry(updatedCar).State = EntityState.Modified;
-                    int affectedRows = await context.SaveChangesAsync();
+                var car = AMXDatabase.Cars.FirstOrDefault(q => q.Id == updatedCar.Id);
 
-                    return affectedRows > 0;
-                }
-                catch (Exception ex)
+                if (car != null)
                 {
-                    throw new InvalidOperationException("Error when updating query.");
+                   // car.ProductId = updatedCar.ProductId;
+                    car.Brand = updatedCar.Brand;
+                    car.Model = updatedCar.Model;
+                    car.Year = updatedCar.Year;
+                    car.Price = updatedCar.Price;
+
+                    return true;
                 }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error when updating query.");
             }
         }
 
         public async Task<bool> DeleteCarById(long id)
         {
-            using (var context = new AMXDbContext())
+            try
             {
-                try
-                {
-                    var car = await context.Cars.FindAsync(id);
-                    if (car == null)
-                    {
-                        return false;
-                    }
+                int car = AMXDatabase.Cars.RemoveAll(q => q.Id == id);
 
-                    context.Cars.Remove(car);
-                    await context.SaveChangesAsync();
-
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    throw new InvalidOperationException("Error when deleting car");
-                }
+                return car > 0;
             }
-        }
-
-        private long GenerateUniqueId(AMXDbContext context)
-        {
-            if (!context.Cars.Any())
+            catch (Exception ex)
             {
-                return 1;
+                throw new InvalidOperationException("Error when deleting car");
             }
 
-            long id = context.Cars.Max(q => q.Id) + 1;
-            return id;
         }
     }
 }

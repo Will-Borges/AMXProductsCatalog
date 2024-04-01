@@ -2,42 +2,59 @@
 
 namespace AMXProductsCatalog.Controllers.Stocks
 {
-    using AMXProductsCatalog.Views.Products.CreateCar.Request;
+    using AMXProductsCatalog.Presenters.Interfaces;
+    using Newtonsoft.Json;
 
     [Route("v1/Stock")]
     [ApiController]
     public class StockController : ControllerBase
     {
-        //
+        private readonly IStockPresenter _stockPresenter;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
 
-        public StockController()
+        public StockController(IStockPresenter stockPresenter)
         {
-            
+            _stockPresenter = stockPresenter;
+
+            _jsonSerializerSettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.None
+            };
         }
 
 
-        //[HttpPost("CreateCarProduct")]
-        //public async Task<IActionResult> CreateCarProduct([FromBody] CreateCarProductRequestDTO CarProductDto)
-        //{
-        //    try
-        //    {
-        //        var productCode = await _carProductPresenter.CreateCarProduct(CarProductDto);
-        //        return Ok(productCode);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-        //}
+        [HttpGet("GetStock")]
+        public async Task<IActionResult> GetStock()
+        {
+            try
+            {
+                var stock = await _stockPresenter.GetStock();
 
-        /*
-            Listar Todos os Itens de Estoque:
-            Método: GET
-            Endpoint: /api/estoque
-            Descrição: Retorna uma lista de todos os itens de estoque disponíveis.
-         */
+                string json = JsonConvert.SerializeObject(stock, _jsonSerializerSettings);
+                return Ok(json);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
+        [HttpGet("GetItemStock")]
+        public async Task<IActionResult> GetItemStockById()
+        {
+            try
+            {
+                var stock = await _stockPresenter.GetStock();
+
+                string json = JsonConvert.SerializeObject(stock, _jsonSerializerSettings);
+                return Ok(json);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         /*
             Detalhes de um Item de Estoque Específico:

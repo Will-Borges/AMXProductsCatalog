@@ -2,7 +2,7 @@
 {
     public static class Pagination
     {
-        public static IQueryable<T> GetPage<T>(int pageSize, int pageNumber, IOrderedQueryable<T>? query)
+        public static IQueryable<T> GetPage<T>(int pageSize, int pageNumber, IQueryable<T>? query)
         {
             if (query == null)
             {

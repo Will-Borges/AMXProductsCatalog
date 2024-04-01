@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 
-namespace AMXProductsCatalog.Core.Application.Services
+namespace AMXProductsCatalog.Core.Application.Services.Products
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Application.Services;
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
+    using AMXProductsCatalog.Core.Domain.Domains.Generics.Ramdom;
     using AMXProductsCatalog.Core.Domain.Domains.Products;
     using AMXProductsCatalog.Core.Domain.Domains.Products.GetProduct;
     using AMXProductsCatalog.Core.Domain.Domains.Products.UpdateCar;
@@ -32,7 +33,7 @@ namespace AMXProductsCatalog.Core.Application.Services
             var carEntity = _mapper.Map<CarProductEntity>(carProduct);
 
             var carId = await _carProductRepository.InsertCarProduct(carEntity);
-            await InsertStockItem(carEntity);
+            await InsertStockItem(carId);
 
             return carId;
         }
@@ -44,7 +45,7 @@ namespace AMXProductsCatalog.Core.Application.Services
             var carsResponse = _mapper.Map<GetCarProductResponse[]>(carProducts);
             return carsResponse;
         }
-        
+
         public async Task<GetCarProductResponse> GetCarProductById(int id)
         {
             var car = await _carProductRepository.GetCarById(id);
@@ -67,9 +68,11 @@ namespace AMXProductsCatalog.Core.Application.Services
             return deleteWithSucess;
         }
 
-        private async Task InsertStockItem(CarProductEntity carEntity)
+        private async Task InsertStockItem(long productId) //Trocar de lugar
         {
-            var carStockItem = new StockItemEntity<CarProductEntity>(carEntity, DateTimeOffset.Now);
+            var carStockItem = new StockItemEntity(RandomIdGenerator.GenerateId(), productId);
+
+            await _stockRepository.CreateStock(new StockEntity(1));
             await _stockRepository.InsertStockItem(carStockItem);
         }
     }

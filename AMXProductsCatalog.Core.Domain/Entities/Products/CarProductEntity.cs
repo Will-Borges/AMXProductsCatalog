@@ -1,11 +1,22 @@
-﻿namespace AMXProductsCatalog.Core.Domain.Entities.Products
-{
-    using AMXProductsCatalog.Core.Domain.Domains.Products;
+﻿using System.Runtime.Serialization;
 
-    public class CarProductEntity : Product
+namespace AMXProductsCatalog.Core.Domain.Entities.Products
+{
+    using AMXProductsCatalog.Core.Domain.Abstractions.Products;
+
+    [DataContract]
+    public class CarProductEntity : BaseProduct
     {
+       // [DataMember]
+       // public long ProductId { get; set; }
+
+        [DataMember]
         public string Brand { get; set; }
+
+        [DataMember]
         public string Model { get; set; }
+
+        [DataMember]
         public int Year { get; set; }
 
 

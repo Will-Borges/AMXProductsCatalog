@@ -17,7 +17,13 @@ builder.Services.AddAutoMapper(typeof(ProductsCatalogProfile).Assembly);
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.GeneratePolymorphicSchemas();
+});
+
+AMXDatabase.startDatabase();
 
 var app = builder.Build();
 

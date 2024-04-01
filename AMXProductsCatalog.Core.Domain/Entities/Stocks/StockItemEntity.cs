@@ -1,27 +1,30 @@
 ﻿namespace AMXProductsCatalog.Core.Domain.Entities.Stocks
 {
-    public class StockItemEntity<TProduct>
+    public class StockItemEntity
     {
         public long Id { get; set; }
-        public TProduct Product { get; set; }
+        public long ProductId { get; set; }
         public int Quantity { get; set; }
         public DateTimeOffset LastUpdated { get; set; }
+       // public BaseProduct? Product { get; set; } // representacao dele com o produto = cardionalidade do entity framework
 
 
-        public StockItemEntity(long id, TProduct product, int quantity, DateTimeOffset lastUpdated)
+        public StockItemEntity() { }
+
+        public StockItemEntity(long productId, int quantity, DateTimeOffset lastUpdated)
         {
-            Id = id;
-            Product = product;
+            ProductId = productId;
             Quantity = quantity;
             LastUpdated = lastUpdated;
+           // Product = new BaseProduct();
         }
 
-        public StockItemEntity(TProduct product, DateTimeOffset lastUpdated)
+        public StockItemEntity(long id, long productId)
         {
-            Id = 0;
+            Id = id;
+            ProductId = productId;
             Quantity = 0;
-            Product = product;
-            LastUpdated = lastUpdated;
+            LastUpdated = DateTimeOffset.Now;
         }
     }
 }

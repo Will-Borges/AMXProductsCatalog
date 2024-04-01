@@ -1,4 +1,5 @@
 ﻿using AMXProductsCatalog.Core.Domain.Entities.Products;
+using AMXProductsCatalog.Core.Domain.Entities.Stocks;
 
 namespace AMXProductsCatalog.Core.Domain.Abstractions.Repository
 {

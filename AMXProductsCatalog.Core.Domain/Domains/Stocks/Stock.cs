@@ -1,25 +1,19 @@
-﻿using System.Data.Entity;
-
-namespace AMXProductsCatalog.Core.Domain.Domains.Stocks
+﻿namespace AMXProductsCatalog.Core.Domain.Domains.Stocks
 {
-    using AMXProductsCatalog.Core.Domain.Domains.Generics.UniqueIds;
-    using AMXProductsCatalog.Core.Domain.Domains.Products;
-
     public class Stock
     {
-        public long Id { get; private set; }
-        public ISet<StockItem<Product>> StockItems { get; }
+        public long Id { get; }
+        public ISet<StockItem> StockItems { get; } = new HashSet<StockItem>();
 
 
-        public void InsertStockItems(StockItem<Product> stockItem)
+        public Stock(long id)
         {
-            StockItems.Add(stockItem);
+            Id = id;
         }
 
-        public void InsertNewId(DbSet<CarProduct> cars)
+        public void InsertStockItems(StockItem stockItem)
         {
-            var id = GenerationUniqueId.GenerateUniqueId(cars);
-            Id = id;
+            StockItems.Add(stockItem);
         }
     }
 }
