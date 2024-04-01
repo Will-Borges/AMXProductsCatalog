@@ -4,6 +4,6 @@
 
     public interface IStockPresenter
     {
-        Task<GetStockDTO> GetStock();
+        Task<GetStockResponseDTO> GetStock();
     }
 }

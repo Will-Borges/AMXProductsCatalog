@@ -1,9 +1,9 @@
 ﻿namespace AMXProductsCatalog.Core.Domain.Abstractions.Application.Services
 {
-    using AMXProductsCatalog.Core.Domain.Domains.Stocks;
+    using AMXProductsCatalog.Core.Domain.Domains.Stocks.GetStock;
 
     public interface IStockService
     {
-        Task<Stock> GetStock();
+        Task<GetStockResponse> GetStock();
     }
 }

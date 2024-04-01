@@ -3,7 +3,7 @@
 namespace AMXProductsCatalog.Views.Stocks.GetStock.Response
 {
     [DataContract]
-    public class GetStockDTO
+    public class GetStockResponseDTO
     {
         [DataMember]
         public long Id { get; set; }

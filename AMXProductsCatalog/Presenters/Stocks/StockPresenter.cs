@@ -21,11 +21,11 @@ namespace AMXProductsCatalog.Presenters.Stocks
         }
 
 
-        public async Task<GetStockDTO> GetStock()
+        public async Task<GetStockResponseDTO> GetStock()
         {
             var stock = await _stockService.GetStock();
 
-            var stockDTO = _mapper.Map<GetStockDTO>(stock);
+            var stockDTO = _mapper.Map<GetStockResponseDTO>(stock);
             return stockDTO;
         }
     }

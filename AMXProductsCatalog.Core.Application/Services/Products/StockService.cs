@@ -3,6 +3,7 @@
     using AMXProductsCatalog.Core.Domain.Abstractions.Application.Services;
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
     using AMXProductsCatalog.Core.Domain.Domains.Stocks;
+    using AMXProductsCatalog.Core.Domain.Domains.Stocks.GetStock;
     using AMXProductsCatalog.Core.Domain.Entities.Stocks;
 
     public class StockService : IStockService
@@ -21,7 +22,7 @@
         }
 
 
-        public async Task<Stock> GetStock()
+        public async Task<GetStockResponse> GetStock()
         {
             var stockEntity = await _stockRepository.GetStock();
 
@@ -34,13 +35,13 @@
 
         //}
 
-        private async Task<Stock> CreateStock(StockEntity stockEntity)
+        private async Task<GetStockResponse> CreateStock(StockEntity stockEntity)
         {
-            var stock = new Stock(stockEntity.Id);
+            var stock = new GetStockResponse(stockEntity.Id);
 
             foreach (var stockItemEntity in stockEntity.StockItems)
             {
-                var stockItem = new StockItem(stockItemEntity.Id, stockItemEntity.Quantity, stockItemEntity.LastUpdated);
+                var stockItem = new GetStockItemResponse(stockItemEntity.Id, stockItemEntity.Quantity, stockItemEntity.LastUpdated);
 
                 var product = await _carProductRepository.GetCarById(stockItemEntity.ProductId);
 
