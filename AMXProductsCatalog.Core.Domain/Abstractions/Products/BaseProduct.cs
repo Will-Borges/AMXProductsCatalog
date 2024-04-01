@@ -10,7 +10,7 @@ namespace AMXProductsCatalog.Core.Domain.Abstractions.Products
     public class BaseProduct
     {
         [DataMember]
-        public long Id { get; set; }
+        public long Id { get; set; } //private
 
         [DataMember]
         public decimal Price { get; set; }

@@ -6,7 +6,7 @@
     {
         Task<long> InsertStockItem(StockItemEntity stockItem);
         Task CreateStock(StockEntity stockEntity);
-        Task<bool> UpdateStock(StockItemEntity newStockItem);
+        Task<bool> UpdateQuantityStockItem(long id, int quantity);
         Task<StockEntity> GetStock();
         Task<StockItemEntity> GetItemStockById(long id);
     }

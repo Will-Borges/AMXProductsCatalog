@@ -8,7 +8,7 @@
     {
         Task<long> CreateCarProduct(CreateCarProductRequestDTO carRequestDTO);
         Task<GetCarProductResponseDTO[]> GetAllCarProducts(int pageSize, int pageNumber);
-        Task<GetCarProductResponseDTO> GetCarProductById(int id);
+        Task<GetCarProductResponseDTO> GetCarProductById(long id);
         Task<bool> DeleteCarProductById(long id);
         Task<bool> UpdateCarProduct(UpdateCarProductRequestDTO carRequestDto);
     }

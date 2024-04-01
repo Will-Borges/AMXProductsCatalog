@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AMXProductsCatalog.Controllers.Stocks
 {
     using AMXProductsCatalog.Presenters.Interfaces;
-    using Newtonsoft.Json;
-
+    
     [Route("v1/Stock")]
     [ApiController]
     public class StockController : ControllerBase
@@ -41,11 +41,11 @@ namespace AMXProductsCatalog.Controllers.Stocks
         }
 
         [HttpGet("GetItemStock")]
-        public async Task<IActionResult> GetItemStockById()
+        public async Task<IActionResult> GetItemStockById([FromQuery] long id)
         {
             try
             {
-                var stock = await _stockPresenter.GetStock();
+                var stock = await _stockPresenter.GetItemStockById(id);
 
                 string json = JsonConvert.SerializeObject(stock, _jsonSerializerSettings);
                 return Ok(json);
@@ -56,11 +56,18 @@ namespace AMXProductsCatalog.Controllers.Stocks
             }
         }
 
-        /*
-            Detalhes de um Item de Estoque Específico:
-            Método: GET
-            Endpoint: /api/estoque/{id}
-            Descrição: Retorna detalhes de um item de estoque específico com o ID correspondente.
-         */
+        [HttpPut("UpdateItemStock")]
+        public async Task<IActionResult> UpdateQuantityStockItem([FromQuery] long id, [FromQuery] int quantity)
+        {
+            try
+            {
+                var updateWithSucess = await _stockPresenter.UpdateQuantityStockItem(id, quantity);
+                return Ok(updateWithSucess);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

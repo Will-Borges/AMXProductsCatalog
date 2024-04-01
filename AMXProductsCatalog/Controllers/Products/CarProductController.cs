@@ -48,7 +48,7 @@ namespace AMXProductsCatalog.Controllers.Products
         }
 
         [HttpGet("GetCarProductById")]
-        public async Task<IActionResult> GetCarProductById([FromQuery] int id)
+        public async Task<IActionResult> GetCarProductById([FromQuery] long id)
         {
             try
             {

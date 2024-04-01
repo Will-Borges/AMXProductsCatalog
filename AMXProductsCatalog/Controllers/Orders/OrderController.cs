@@ -1,34 +1,45 @@
-﻿using AMXProductsCatalog.Views.Products.CreateCar.Request;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace AMXProductsCatalog.Controllers.Orders
 {
+    using AMXProductsCatalog.Presenters.Interfaces;
+    using AMXProductsCatalog.Views.Orders.CreateOrder.Request;
+
     [Route("v1/Order")]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        //
+        private readonly IOrderPresenter _orderPresenter;
+        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
 
-        public OrderController()
+        public OrderController(IOrderPresenter orderPresenter)
         {
-            
+            _orderPresenter = orderPresenter;
+
+            _jsonSerializerSettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.None
+            };
         }
 
 
-        //[HttpPost("CreateCarProduct")]
-        //public async Task<IActionResult> CreateCarProduct([FromBody] CreateCarProductRequestDTO CarProductDto)
-        //{
-        //    try
-        //    {
-        //        var productCode = await _carProductPresenter.CreateCarProduct(CarProductDto);
-        //        return Ok(productCode);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-        //}
+        [HttpPost("CreateOrder")]
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequestDTO[] Dtos)
+        {
+            try
+            {
+                var order = await _orderPresenter.CreateOrder(Dtos);
+
+                string json = JsonConvert.SerializeObject(order, _jsonSerializerSettings);
+                return Ok(json);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         /*
             Criar Pedido:

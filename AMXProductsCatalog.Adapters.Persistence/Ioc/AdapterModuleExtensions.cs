@@ -2,7 +2,7 @@
 
 namespace AMXProductsCatalog.Adapters.Persistence.Ioc
 {
-    using AMXProductsCatalog.Adapters.Persistence.Data;
+    using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Orders;
     using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products;
     using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Stocks;
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
@@ -13,6 +13,7 @@ namespace AMXProductsCatalog.Adapters.Persistence.Ioc
         {
             services.AddScoped<ICarProductRepository, CarProductRepository>();
             services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             return services;
         }

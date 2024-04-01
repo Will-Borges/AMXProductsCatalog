@@ -9,6 +9,6 @@ namespace AMXProductsCatalog.Views.Stocks.GetStock.Response
         public long Id { get; set; }
 
         [DataMember]
-        public ISet<GetStockItemDTO> StockItems { get; set; } = new HashSet<GetStockItemDTO>();
+        public ISet<GetStockItemResponseDTO> StockItems { get; set; } = new HashSet<GetStockItemResponseDTO>();
     }
 }

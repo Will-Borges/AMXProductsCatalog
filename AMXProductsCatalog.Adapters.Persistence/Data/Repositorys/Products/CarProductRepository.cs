@@ -26,7 +26,6 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
             {
                 throw new InvalidOperationException("Error inserting car.");
             }
-
         }
 
         public async Task<CarProductEntity[]> GetAllCars(int pageSize, int pageNumber)

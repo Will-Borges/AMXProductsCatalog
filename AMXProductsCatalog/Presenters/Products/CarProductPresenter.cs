@@ -41,7 +41,7 @@ namespace AMXProductsCatalog.Presenters.Products
             return carsResponse;
         }
 
-        public async Task<GetCarProductResponseDTO> GetCarProductById(int id)
+        public async Task<GetCarProductResponseDTO> GetCarProductById(long id)
         {
             var carProducts = await _carProductService.GetCarProductById(id);
 

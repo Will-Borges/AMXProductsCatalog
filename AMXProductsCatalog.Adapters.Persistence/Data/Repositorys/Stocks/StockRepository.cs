@@ -82,25 +82,28 @@
             }
         }
 
-        public async Task<bool> UpdateStock(StockItemEntity newStockItem)
+        public async Task<bool> UpdateQuantityStockItem(long id, int quantity)
         {
-            //try
-            //{
-            //    var originalStock = await _context.Stocks.Include(s => s.StockItems)
-            //        .FirstOrDefaultAsync(s => s.Id == 1);
+            try
+            {
+                var stock = AMXDatabase.Stocks.FirstOrDefault(q => q.Id == 1);
 
-            //    originalStock!.StockItems.Add(newStockItem);
 
-            //    int affectedRows = await _context.SaveChangesAsync();
-            //    return affectedRows > 0;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new InvalidOperationException("Erro ao atualizar o estoque.", ex);
-            //}
-            return false;
+                if (stock != null)
+                {
+                    var stockItem = stock.StockItems.FirstOrDefault(q => q.Id == id);
+                    stockItem.Quantity = quantity;
+
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error when updating query.");
+            }
         }
-
 
         private static bool VerifyIfStockEntityExist(StockEntity? stockEntity)
         {

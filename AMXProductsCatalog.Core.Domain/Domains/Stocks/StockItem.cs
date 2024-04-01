@@ -5,10 +5,19 @@
     public class StockItem
     {
         public long Id { get; }
-        public BaseProduct Product { get; private set; }
+        public BaseProduct Product { get; private set; } 
         public int Quantity { get; }
         public DateTimeOffset LastUpdated { get; }
 
+        public StockItem() { }
+
+        public StockItem(long id, BaseProduct product, int quantity, DateTimeOffset lastUpdated)
+        {
+            Id = id;
+            Product = product;
+            Quantity = quantity;
+            LastUpdated = lastUpdated;
+        }
 
         public StockItem(long id, int quantity, DateTimeOffset lastUpdated)
         {

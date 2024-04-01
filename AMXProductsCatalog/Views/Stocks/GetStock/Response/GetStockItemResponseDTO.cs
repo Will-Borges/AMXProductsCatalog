@@ -4,7 +4,7 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class GetStockItemDTO
+    public class GetStockItemResponseDTO
     {
         [DataMember]
         public long Id { get; set; }

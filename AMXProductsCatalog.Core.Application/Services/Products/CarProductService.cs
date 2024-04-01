@@ -46,7 +46,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Products
             return carsResponse;
         }
 
-        public async Task<GetCarProductResponse> GetCarProductById(int id)
+        public async Task<GetCarProductResponse> GetCarProductById(long id)
         {
             var car = await _carProductRepository.GetCarById(id);
 
@@ -54,7 +54,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Products
             return carResponse;
         }
 
-        public async Task<bool> DeleteCarProductById(long id)
+        public async Task<bool> DeleteCarProductById(long id) //precisa apagar o produto do stock
         {
             var deleteWithSucess = await _carProductRepository.DeleteCarById(id);
             return deleteWithSucess;
