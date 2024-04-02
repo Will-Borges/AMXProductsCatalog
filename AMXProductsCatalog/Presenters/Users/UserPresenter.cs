@@ -30,12 +30,12 @@ namespace AMXProductsCatalog.Presenters.Users
             return createWithSucess;
         }
 
-        public async Task<string> AuthenticateUser(UserAuthenticationDTO userDto)
+        public async Task<dynamic> AuthenticateUser(UserAuthenticationDTO userDto)
         {
             var user = await GetUser(userDto);
 
             var token = TokenService.GenerateToken(user);
-            return token;
+            return new { Token = token };
         }
 
         private async Task<User> GetUser(UserAuthenticationDTO userDto)

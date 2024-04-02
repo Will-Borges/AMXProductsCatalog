@@ -4,16 +4,15 @@ namespace AMXProductsCatalog.Controllers.Authentications
 {
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Authentication;
-    using AMXProductsCatalog.Views.Users;
 
-    [Route("v1/Authentication")]
+    [Route("v1/AuthenticationController")]
     [ApiController]
-    public class Authentication : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IUserPresenter _userPresenter;
 
 
-        public Authentication(IUserPresenter userPresenter)
+        public AuthenticationController(IUserPresenter userPresenter)
         {
             _userPresenter = userPresenter; 
         }
