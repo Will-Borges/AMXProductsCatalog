@@ -2,7 +2,6 @@
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
     using AMXProductsCatalog.Core.Domain.Domains.Generics.Ramdom;
-    using AMXProductsCatalog.Core.Domain.Domains.Orders;
     using AMXProductsCatalog.Core.Domain.Entities.Orders.CreateOrder;
 
     public class OrderRepository : IOrderRepository
@@ -28,6 +27,40 @@
             }
         }
 
+        public async Task<long> InsertOrderItem(OrderItemEntity orderItem)
+        {
+            try
+            {
+                orderItem.Id = RandomIdGenerator.GenerateId();
+                AMXDatabase.OrderItems.Add(orderItem);
+
+                return orderItem.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error inserting orderItem.");
+            }
+        }
+
+        public async Task<OrderItemEntity> GetOrderItemById(long id)
+        {
+            try
+            {
+                var orderItemEntity = AMXDatabase.OrderItems.FirstOrDefault(q => q.Id == id);
+
+                if (orderItemEntity == null)
+                {
+                    return new OrderItemEntity();
+                }
+
+                return orderItemEntity;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error inserting orderItem.");
+            }
+        }
+
         public async Task<bool> UpdateOrder(OrderEntity orderInput)
         {
             try
@@ -40,7 +73,7 @@
                 }
 
                 order.CustomerId = orderInput.CustomerId;
-                order.ItemsId = orderInput.ItemsId;
+                order.OrderItemsId = orderInput.OrderItemsId;
                 order.TotalPrice = orderInput.TotalPrice;
                 order.Status = orderInput.Status;
 

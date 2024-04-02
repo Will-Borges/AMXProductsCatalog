@@ -6,7 +6,7 @@
     {
         public long Id { get; private set; }
         public Customer Customer { get; }
-        public OrderItem[] Items { get; private set; }
+        public OrderItem[] Items { get; private set; } = new OrderItem[0];
         public decimal TotalPrice { get; private set; } = decimal.Zero;
         public OrderStatus Status { get; private set; }
 
@@ -22,11 +22,11 @@
             Customer = customer;
         }
 
-        public Order(Customer customer, OrderItem[] items)
+        public Order(Customer customer)
         {
             Customer = customer;
-            Items = items;
         }
+
 
         public void SetStatus(OrderStatus status)
         {

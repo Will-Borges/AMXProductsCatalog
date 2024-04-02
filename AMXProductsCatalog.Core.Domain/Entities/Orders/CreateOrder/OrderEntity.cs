@@ -6,7 +6,7 @@
     {
         public long Id { get; set; }
         public long CustomerId { get; set; }
-        public long[] ItemsId { get; set; } = Array.Empty<long>();
+        public long[] OrderItemsId { get; set; } = Array.Empty<long>();
         public decimal TotalPrice { get; set; } = decimal.Zero;
         public OrderStatus Status { get; set; }
     }

@@ -26,7 +26,7 @@ namespace AMXProductsCatalog.Controllers.Orders
 
 
         [HttpPost("CreateOrder")]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequestDTO[] dtos) //produto precisa do id, //precisa calcular com 2 de quantidade // setar como processing
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequestDTO[] dtos) 
         {
             try
             {

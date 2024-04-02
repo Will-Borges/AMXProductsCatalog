@@ -38,8 +38,6 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
         {
             var stockItems = await GetStockItem(orders);
 
-            VerifyQuantity(stockItems, orders);
-
             var order = BuildOrder(stockItems, orders);
             var orderId = await InserOrder(order);
 
@@ -93,11 +91,17 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
                 orderEntity.Status);
 
             var items = new List<OrderItem>();
-            foreach (var itemId in orderEntity.ItemsId)
+            foreach (var itemId in orderEntity.OrderItemsId)
             {
-                var itemEntity = await _stockRepository.GetItemStockById(itemId);
+                var orderItemEntity = await _orderRepository.GetOrderItemById(itemId);
+                var itemEntity = await _stockRepository.GetItemStockById(orderItemEntity.ItemId);
 
-                var orderItem = new OrderItem(itemEntity.Id, itemEntity.Quantity);
+                if (itemEntity == null)
+                {
+                    throw new InvalidOperationException("ItemStock invalid.");
+                }
+
+                var orderItem = new OrderItem(itemEntity.Id, orderItemEntity.Quantity);
 
                 await InsertCarProduct(orderItem, itemEntity.ProductId);
                 items.Add(orderItem);
@@ -109,37 +113,64 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
 
         private async Task<long> InserOrder(Order order)
         {
+            var orderItemIds = await InsertOrderItem(order);
+
             var orderEntity = _mapper.Map<OrderEntity>(order);
+            orderEntity.OrderItemsId = orderItemIds;
 
             var orderId = await _orderRepository.InsertOrder(orderEntity);
             return orderId;
         }
 
+        private async Task<long[]> InsertOrderItem(Order order)
+        {
+            var orderEntitys = _mapper.Map<OrderItemEntity[]>(order.Items); //QUI TA invertido ta recebendo product ao inves do item
+
+            var orderItemIds = new List<long>();
+            foreach (var orderEntity in orderEntitys)
+            {
+                var orderItemId = await _orderRepository.InsertOrderItem(orderEntity);
+                orderItemIds.Add(orderItemId);
+            }
+            
+            return orderItemIds.ToArray();
+        }
+
         private Order BuildOrder(StockItem[] stockItems, CreateOrder[] orders) //retirar orders
         {
-            var orderItem = _mapper.Map<OrderItem[]>(stockItems);
+            var orderItem = BuildOrderItem(stockItems, orders);
 
-            var order = new Order(
-                new Customer(), //revisar
-                orderItem);
+            var order = new Order(new Customer()); //revisar
 
             order.SetStatus(OrderStatus.Processing);
+            order.SetItems(orderItem);
             order.SetTotalPrice();
 
             return order;
         }
 
-        private void VerifyQuantity(StockItem[] stockItems, CreateOrder[] orders)
+        private OrderItem[] BuildOrderItem(StockItem[] stockItems, CreateOrder[] orders)
         {
+            var orderItems = new List<OrderItem>();
             foreach (var item in stockItems)
             {
                 var order = orders.FirstOrDefault(q => q.ItemId == item.Id);
 
-                if ((item.Quantity - order.Quantity) < 0)
+                if (VerifyQuantity(item.Quantity, order!.Quantity))
                 {
                     throw new InvalidOperationException($"Quantity of itemId {order.ItemId} invalid.");
                 }
+
+                var orderItem = new OrderItem(order.ItemId, item.Product, order.Quantity);
+                orderItems.Add(orderItem);
             }
+
+            return orderItems.ToArray();
+        }
+
+        private bool VerifyQuantity(int itemQuantity, int orderQuantity)
+        {
+            return (itemQuantity - orderQuantity) < 0;
         }
 
         private async Task<StockItem[]> GetStockItem(CreateOrder[] orders)
@@ -183,7 +214,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             var car = await GetCarById(productId);
             orderItem.InsertBaseProduct(car);
         }
-        
+
         private async Task<CarProduct> GetCarById(long productId)
         {
             var carEntity = await _carProductRepository.GetCarById(productId);

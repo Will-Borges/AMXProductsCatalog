@@ -7,5 +7,7 @@
         Task<long> InsertOrder(OrderEntity order);
         Task<OrderEntity> GetOrderById(long id);
         Task<bool> UpdateOrder(OrderEntity orderInput);
+        Task<long> InsertOrderItem(OrderItemEntity orderItem);
+        Task<OrderItemEntity> GetOrderItemById(long id);
     }
 }

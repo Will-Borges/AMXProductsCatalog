@@ -8,9 +8,6 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
     public class CreateOrderItemResponseDTO
     {
         [DataMember]
-        public long Id { get; set; }
-
-        [DataMember]
         public BaseProduct Product { get; set; }
 
         [DataMember]
@@ -19,9 +16,8 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
 
         public CreateOrderItemResponseDTO() { }
 
-        public CreateOrderItemResponseDTO(long id, BaseProduct product, int quantity)
+        public CreateOrderItemResponseDTO(BaseProduct product, int quantity)
         {
-            Id = id;
             Product = product;
             Quantity = quantity;
         }

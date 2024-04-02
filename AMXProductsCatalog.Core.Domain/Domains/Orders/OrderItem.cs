@@ -15,9 +15,9 @@ namespace AMXProductsCatalog.Core.Domain.Domains.Orders
         [DataMember]
         public int Quantity { get; }
 
-        public OrderItem(long id, int quantity)
+
+        public OrderItem(int quantity)
         {
-            Id = id;
             Quantity = quantity;
         }
 
@@ -27,6 +27,12 @@ namespace AMXProductsCatalog.Core.Domain.Domains.Orders
         {
             Id = id;
             Product = product;
+            Quantity = quantity;
+        }
+
+        public OrderItem(long id, int quantity)
+        {
+            Id = id;
             Quantity = quantity;
         }
 
