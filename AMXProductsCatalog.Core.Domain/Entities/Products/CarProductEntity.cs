@@ -8,7 +8,7 @@ namespace AMXProductsCatalog.Core.Domain.Entities.Products
     public class CarProductEntity : BaseProduct
     {
        // [DataMember]
-       // public long ProductId { get; set; }
+       // public long ItemId { get; set; }
 
         [DataMember]
         public string Brand { get; set; }

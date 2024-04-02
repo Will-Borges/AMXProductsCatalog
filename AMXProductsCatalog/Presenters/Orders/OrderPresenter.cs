@@ -8,6 +8,7 @@ namespace AMXProductsCatalog.Presenters.Orders
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Request;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Response;
+    using AMXProductsCatalog.Views.Orders.GetOrder.Response;
 
     public class OrderPresenter : IOrderPresenter
     {
@@ -29,6 +30,22 @@ namespace AMXProductsCatalog.Presenters.Orders
             var order= await _orderService.CreateOrder(createOrder);
 
             var orderResult = _mapper.Map<CreateOrderResponseDTO>(order);
+            return orderResult;
+        }
+
+        public async Task<GetOrderResponseDTO> GetOrderById(long id) //validar a entrada dos dados
+        {
+            var order = await _orderService.GetOrderById(id);
+
+            var orderResult = _mapper.Map<GetOrderResponseDTO>(order);
+            return orderResult;
+        }
+        
+        public async Task<GetOrderResponseDTO> ConfirmOrderById(long id) //validar a entrada dos dados
+        {
+            var order = await _orderService.GetOrderById(id);
+
+            var orderResult = _mapper.Map<GetOrderResponseDTO>(order); 
             return orderResult;
         }
     }

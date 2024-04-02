@@ -2,7 +2,7 @@
 {
     public class CreateOrderRequestDTO
     {
-        public long ProductId { get; set; }
+        public long ItemId { get; set; }
         public int Quantity { get; set; }
     }
 }

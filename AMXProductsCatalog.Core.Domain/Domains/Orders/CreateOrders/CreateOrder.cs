@@ -2,12 +2,12 @@
 {
     public class CreateOrder
     {
-        public long ProductId { get; }
+        public long ItemId { get; }
         public int Quantity { get; }
 
-        public CreateOrder(long productId, int quantity)
+        public CreateOrder(long itemId, int quantity)
         {
-            ProductId = productId;
+            ItemId = itemId;
             Quantity = quantity;
         }
 

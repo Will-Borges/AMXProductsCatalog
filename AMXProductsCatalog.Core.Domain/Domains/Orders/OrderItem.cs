@@ -10,11 +10,16 @@ namespace AMXProductsCatalog.Core.Domain.Domains.Orders
         public long Id { get; }
 
         [DataMember]
-        public BaseProduct Product { get; }
+        public BaseProduct Product { get; set; }
 
         [DataMember]
         public int Quantity { get; }
 
+        public OrderItem(long id, int quantity)
+        {
+            Id = id;
+            Quantity = quantity;
+        }
 
         public OrderItem() { }
 
@@ -23,6 +28,11 @@ namespace AMXProductsCatalog.Core.Domain.Domains.Orders
             Id = id;
             Product = product;
             Quantity = quantity;
+        }
+
+        public void InsertBaseProduct(BaseProduct product)
+        {
+            Product = product;
         }
     }
 }

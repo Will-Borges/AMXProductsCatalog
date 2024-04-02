@@ -2,6 +2,7 @@
 
 namespace AMXProductsCatalog.Automapper
 {
+    using AMXProductsCatalog.Core.Domain.Abstractions.Products;
     using AMXProductsCatalog.Core.Domain.Domains.Orders;
     using AMXProductsCatalog.Core.Domain.Domains.Orders.CreateOrders;
     using AMXProductsCatalog.Core.Domain.Domains.Products;
@@ -14,6 +15,7 @@ namespace AMXProductsCatalog.Automapper
     using AMXProductsCatalog.Core.Domain.Entities.Stocks;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Request;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Response;
+    using AMXProductsCatalog.Views.Orders.GetOrder.Response;
     using AMXProductsCatalog.Views.Products.CreateCar.Request;
     using AMXProductsCatalog.Views.Products.GetCar.Response;
     using AMXProductsCatalog.Views.Products.UpdateCar.Request;
@@ -37,10 +39,15 @@ namespace AMXProductsCatalog.Automapper
                 .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
 
+            CreateMap<OrderItem, GetOrderItemResponseDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
+
             // DTOs
 
             CreateMap<CreateOrderRequestDTO, CreateOrder>()
-                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.ItemId, opt => opt.MapFrom(src => src.ItemId))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
 
             CreateMap<Order, CreateOrderResponseDTO>()
@@ -49,10 +56,17 @@ namespace AMXProductsCatalog.Automapper
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
-            CreateMap<OrderItem, CreateOrderItemDTO>()
+            CreateMap<OrderItem, CreateOrderItemResponseDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
+
+            CreateMap<Order, GetOrderResponseDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer))
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
+                .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
             // Entities
 
@@ -62,6 +76,11 @@ namespace AMXProductsCatalog.Automapper
                 .ForMember(dest => dest.ItemsId, opt => opt.MapFrom(src => src.Items.Select(item => item.Id).ToArray()))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+
+            CreateMap<StockItemEntity, OrderItem>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Product, opt => opt.MapFrom(src => new BaseProduct { Id = src.ProductId }))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity));
         }
 
         private void MapStock()
@@ -80,13 +99,13 @@ namespace AMXProductsCatalog.Automapper
 
             //CreateMap<StockItemEntity, StockItem>()
             //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            //    .ForMember(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ProductId))
+            //    .ForMember(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ItemId))
             //    .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
             //    .ForMember(dest => dest.LastUpdated, opt => opt.MapFrom(src => src.LastUpdated));
 
             CreateMap<StockItemEntity, StockItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                //.ForMember(dest => dest.Product, opt => opt.MapFrom(src => new BaseProduct { Id = src.ProductId }))
+                //.ForMember(dest => dest.Product, opt => opt.MapFrom(src => new BaseProduct { Id = src.ItemId }))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
                 .ForMember(dest => dest.LastUpdated, opt => opt.MapFrom(src => src.LastUpdated));
         }

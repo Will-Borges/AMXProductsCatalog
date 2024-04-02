@@ -6,5 +6,6 @@
     public interface IOrderService
     {
         Task<Order> CreateOrder(CreateOrder[] orders);
+        Task<Order> GetOrderById(long id);
     }
 }

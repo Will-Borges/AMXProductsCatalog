@@ -77,7 +77,7 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
 
                 if (car != null)
                 {
-                   // car.ProductId = updatedCar.ProductId;
+                   // car.ItemId = updatedCar.ItemId;
                     car.Brand = updatedCar.Brand;
                     car.Model = updatedCar.Model;
                     car.Year = updatedCar.Year;

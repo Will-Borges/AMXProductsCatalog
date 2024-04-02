@@ -1,20 +1,29 @@
 ﻿namespace AMXProductsCatalog.Core.Domain.Domains.Orders
 {
     using AMXProductsCatalog.Core.Domain.Domains.Customers;
-    using System.Runtime.Serialization;
 
     public class Order
     {
         public long Id { get; private set; }
         public Customer Customer { get; }
-        public OrderItem[] Items { get; }
+        public OrderItem[] Items { get; private set; }
         public decimal TotalPrice { get; private set; } = decimal.Zero;
         public OrderStatus Status { get; private set; }
 
 
-        public Order(long id, Customer customer, OrderItem[] items)
+        public Order(long id,
+                     Customer customer,
+                     decimal totalPrice,
+                     OrderStatus status)
         {
+            TotalPrice = totalPrice;
+            Status = status;
             Id = id;
+            Customer = customer;
+        }
+
+        public Order(Customer customer, OrderItem[] items)
+        {
             Customer = customer;
             Items = items;
         }
@@ -35,6 +44,11 @@
         public void SetId(long id)
         {
             Id += id;
+        }
+
+        public void SetItems(OrderItem[] items)
+        {
+            Items = items;
         }
     }
 }

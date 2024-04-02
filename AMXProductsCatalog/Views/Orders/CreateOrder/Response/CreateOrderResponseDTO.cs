@@ -15,7 +15,7 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
         public Customer Customer { get; set; } // revisar
 
         [DataMember]
-        public CreateOrderItemDTO[] Items { get; set; }
+        public CreateOrderItemResponseDTO[] Items { get; set; }
 
         [DataMember]
         public decimal TotalPrice { get; set; }
@@ -26,7 +26,7 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
 
         public CreateOrderResponseDTO() { }
 
-        public CreateOrderResponseDTO(long id, Customer customer, CreateOrderItemDTO[] items, decimal totalPrice, OrderStatus status)
+        public CreateOrderResponseDTO(long id, Customer customer, CreateOrderItemResponseDTO[] items, decimal totalPrice, OrderStatus status)
         {
             Id = id;
             Customer = customer;

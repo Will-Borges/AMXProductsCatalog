@@ -26,11 +26,43 @@ namespace AMXProductsCatalog.Controllers.Orders
 
 
         [HttpPost("CreateOrder")]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequestDTO[] Dtos)
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequestDTO[] dtos) //produto precisa do id, //precisa calcular com 2 de quantidade // setar como processing
         {
             try
             {
-                var order = await _orderPresenter.CreateOrder(Dtos);
+                var order = await _orderPresenter.CreateOrder(dtos);
+
+                string json = JsonConvert.SerializeObject(order, _jsonSerializerSettings);
+                return Ok(json);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("GetOrder")]
+        public async Task<IActionResult> GetOrderById([FromQuery] long id)
+        {
+            try
+            {
+                var order = await _orderPresenter.GetOrderById(id);
+
+                string json = JsonConvert.SerializeObject(order, _jsonSerializerSettings);
+                return Ok(json);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("ConfirmOrder")]
+        public async Task<IActionResult> ConfirmOrderById([FromQuery] long id)
+        {
+            try
+            {
+                var order = await _orderPresenter.GetOrderById(id);
 
                 string json = JsonConvert.SerializeObject(order, _jsonSerializerSettings);
                 return Ok(json);

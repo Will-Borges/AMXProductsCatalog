@@ -47,11 +47,42 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             return order;
         }
 
+        public async Task<Order> GetOrderById(long id)
+        {
+            var orderEntity = await _orderRepository.GetOrderById(id);
+            var order = await BuildOrder(orderEntity);
+
+            return order;
+        }
+
+        private async Task<Order> BuildOrder(OrderEntity orderEntity)
+        {
+            var order = new Order(
+                orderEntity.Id,
+                new Customer(), //revisar
+                orderEntity.TotalPrice,
+                orderEntity.Status);
+
+            var items = new List<OrderItem>();
+            foreach (var itemId in orderEntity.ItemsId)
+            {
+                var itemEntity = await _stockRepository.GetItemStockById(itemId);
+
+                var orderItem = new OrderItem(itemEntity.Id, itemEntity.Quantity);
+
+                await InsertCarProduct(orderItem, itemEntity.ProductId);
+                items.Add(orderItem);
+            }
+
+            order.SetItems(items.ToArray());
+            return order;
+        }
+
         private async Task<long> InserOrder(Order order)
         {
             var orderEntity = _mapper.Map<OrderEntity>(order);
 
-            var orderId = await _orderRepository.InsertOrderProduct(orderEntity);
+            var orderId = await _orderRepository.InsertOrder(orderEntity);
             return orderId;
         }
 
@@ -60,7 +91,6 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             var orderItem = _mapper.Map<OrderItem[]>(stockItems);
 
             var order = new Order(
-                RandomIdGenerator.GenerateId(),
                 new Customer(), //revisar
                 orderItem);
 
@@ -74,11 +104,11 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
         {
             foreach (var item in stockItems)
             {
-                var order = orders.FirstOrDefault(q => q.ProductId == item.Id);
+                var order = orders.FirstOrDefault(q => q.ItemId == item.Id);
 
                 if ((item.Quantity - order.Quantity) < 0)
                 {
-                    throw new InvalidOperationException($"Quantity of item {order.ProductId} invalid.");
+                    throw new InvalidOperationException($"Quantity of item {order.ItemId} invalid.");
                 }
             }
         }
@@ -88,15 +118,15 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             var stockItemList = new List<StockItem>();
             foreach (var order in orders)
             {
-                var stockItemEntity = await _stockRepository.GetItemStockById(order.ProductId);
+                var stockItemEntity = await _stockRepository.GetItemStockById(order.ItemId);
 
                 if (stockItemEntity == null) //separar esse regra em um metodo
                 {
-                    throw new InvalidOperationException("Id not found.");
+                    throw new InvalidOperationException("ItemId not found.");
                 }
 
                 //var stockItem = _mapper.Map<StockItem>(stockItemEntity);
-                //await InsertCarProduct(stockItem, stockItemEntity.ProductId);
+                //await InsertCarProduct(stockItem, stockItemEntity.ItemId);
 
                 var stockItem = await BuildStockItem(stockItemEntity, stockItemEntity.ProductId);
                 stockItemList.Add(stockItem);
@@ -107,10 +137,21 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
 
         private async Task InsertCarProduct(StockItem stockItem, long productId)
         {
+            var car = await GetCarById(productId);
+            stockItem.InsertBaseProduct(car);
+        }
+
+        private async Task InsertCarProduct(OrderItem orderItem, long productId)
+        {
+            var car = await GetCarById(productId);
+            orderItem.InsertBaseProduct(car);
+        }
+        
+        private async Task<CarProduct> GetCarById(long productId)
+        {
             var carEntity = await _carProductRepository.GetCarById(productId);
             var car = _mapper.Map<CarProduct>(carEntity);
-
-            stockItem.InsertBaseProduct(car);
+            return car;
         }
 
         private async Task<StockItem> BuildStockItem(StockItemEntity stockItemEntity, long productId)

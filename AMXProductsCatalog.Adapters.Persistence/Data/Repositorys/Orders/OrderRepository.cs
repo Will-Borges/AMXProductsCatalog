@@ -12,7 +12,7 @@
             
         }
 
-        public async Task<long> InsertOrderProduct(OrderEntity order)
+        public async Task<long> InsertOrder(OrderEntity order)
         {
             try
             {
@@ -25,7 +25,25 @@
             {
                 throw new InvalidOperationException("Error inserting order.");
             }
+        }
 
+        public async Task<OrderEntity> GetOrderById(long id)
+        {
+            try
+            {
+                var order = AMXDatabase.Orders.FirstOrDefault(q => q.Id == id);
+
+                if (order == null)
+                {
+                    return new OrderEntity();
+                }
+
+                return order;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error inserting order.");
+            }
         }
     }
 }

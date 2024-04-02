@@ -4,6 +4,7 @@
 
     public interface IOrderRepository
     {
-        Task<long> InsertOrderProduct(OrderEntity order);
+        Task<long> InsertOrder(OrderEntity order);
+        Task<OrderEntity> GetOrderById(long id);
     }
 }
