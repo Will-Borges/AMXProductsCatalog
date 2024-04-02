@@ -3,7 +3,6 @@
 namespace AMXProductsCatalog.Presenters.Orders
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Application.Services;
-    using AMXProductsCatalog.Core.Domain.Domains.Orders;
     using AMXProductsCatalog.Core.Domain.Domains.Orders.CreateOrders;
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Request;
@@ -40,13 +39,15 @@ namespace AMXProductsCatalog.Presenters.Orders
             var orderResult = _mapper.Map<GetOrderResponseDTO>(order);
             return orderResult;
         }
-        
-        public async Task<GetOrderResponseDTO> ConfirmOrderById(long id) //validar a entrada dos dados
-        {
-            var order = await _orderService.GetOrderById(id);
 
-            var orderResult = _mapper.Map<GetOrderResponseDTO>(order); 
-            return orderResult;
+        public async Task<bool> ConfirmOrderById(long id) //validar a entrada dos dados
+        {
+            //var order = await _orderService.GetOrderById(id);
+
+            //var orderResult = _mapper.Map<GetOrderResponseDTO>(order);
+            //return orderResult;
+
+            return true;
         }
     }
 }

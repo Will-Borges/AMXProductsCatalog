@@ -8,5 +8,6 @@
     {
         Task<CreateOrderResponseDTO> CreateOrder(CreateOrderRequestDTO[] createOrderDto);
         Task<GetOrderResponseDTO> GetOrderById(long id);
+        Task<bool> ConfirmOrderById(long id);
     }
 }

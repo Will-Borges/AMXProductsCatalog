@@ -49,10 +49,39 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
 
         public async Task<Order> GetOrderById(long id)
         {
-            var orderEntity = await _orderRepository.GetOrderById(id);
+            var orderEntity = await RepositoryGetOrderById(id);
             var order = await BuildOrder(orderEntity);
 
             return order;
+        }
+
+        //public async Task<bool> ConfirmOrderById(long id)
+        //{
+        //    var orderEntity = await RepositoryGetOrderById(id);
+
+        //    foreach (var itemId in orderEntity.ItemsId)
+        //    {
+        //        var stockItem = await RepositoryGetItemStockById(itemId);
+
+        //        await UpdateQuantityStock(stockItem);
+        //        _stockRepository.UpdateQuantityStockItem(stockItem.Id, stockItem.Quantity);
+        //    }
+
+        //    var updateWithSucess = _orderRepository.UpdateOrder(orderEntity);
+        //}
+
+        //private Task UpdateQuantityStock(StockItemEntity stockItem, long quantity)
+        //{
+        //    if ((stockItem.Quantity - quantity) >= 0)
+        //    {
+
+        //    }
+        //}
+
+        private async Task<OrderEntity> RepositoryGetOrderById(long id)
+        {
+            var orderEntity = await _orderRepository.GetOrderById(id);
+            return orderEntity;
         }
 
         private async Task<Order> BuildOrder(OrderEntity orderEntity)
@@ -108,7 +137,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
 
                 if ((item.Quantity - order.Quantity) < 0)
                 {
-                    throw new InvalidOperationException($"Quantity of item {order.ItemId} invalid.");
+                    throw new InvalidOperationException($"Quantity of itemId {order.ItemId} invalid.");
                 }
             }
         }
@@ -118,21 +147,29 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             var stockItemList = new List<StockItem>();
             foreach (var order in orders)
             {
-                var stockItemEntity = await _stockRepository.GetItemStockById(order.ItemId);
-
-                if (stockItemEntity == null) //separar esse regra em um metodo
-                {
-                    throw new InvalidOperationException("ItemId not found.");
-                }
-
-                //var stockItem = _mapper.Map<StockItem>(stockItemEntity);
-                //await InsertCarProduct(stockItem, stockItemEntity.ItemId);
+                var stockItemEntity = await RepositoryGetItemStockById(order.ItemId);
 
                 var stockItem = await BuildStockItem(stockItemEntity, stockItemEntity.ProductId);
                 stockItemList.Add(stockItem);
             }
 
             return stockItemList.ToArray();
+        }
+
+        private async Task<StockItemEntity> RepositoryGetItemStockById(long id)
+        {
+            var stockItemEntity = await _stockRepository.GetItemStockById(id);
+
+            VerifyStockItemEntityIsNull(stockItemEntity);
+            return stockItemEntity;
+        }
+
+        private void VerifyStockItemEntityIsNull(StockItemEntity? stockItemEntity)
+        {
+            if (stockItemEntity == null) //separar esse regra em um metodo
+            {
+                throw new InvalidOperationException("ItemId not found.");
+            }
         }
 
         private async Task InsertCarProduct(StockItem stockItem, long productId)
