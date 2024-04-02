@@ -5,6 +5,7 @@ namespace AMXProductsCatalog.Controllers.Products
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Products.CreateCar.Request;
     using AMXProductsCatalog.Views.Products.UpdateCar.Request;
+    using Microsoft.AspNetCore.Authorization;
 
     [Route("v1/CarProduct")]
     [ApiController]
@@ -18,8 +19,8 @@ namespace AMXProductsCatalog.Controllers.Products
             _carProductPresenter = carProductPresenter;
         }
 
-
         [HttpPost("CreateCarProduct")]
+        [Authorize(Roles = "employee,manager")]
         public async Task<IActionResult> CreateCarProduct([FromBody] CreateCarProductRequestDTO CarProductDto)
         {
             try

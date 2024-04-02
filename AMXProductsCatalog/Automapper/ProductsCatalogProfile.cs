@@ -10,9 +10,12 @@ namespace AMXProductsCatalog.Automapper
     using AMXProductsCatalog.Core.Domain.Domains.Products.UpdateCar;
     using AMXProductsCatalog.Core.Domain.Domains.Stocks;
     using AMXProductsCatalog.Core.Domain.Domains.Stocks.GetStock;
+    using AMXProductsCatalog.Core.Domain.Domains.Users;
     using AMXProductsCatalog.Core.Domain.Entities.Orders.CreateOrder;
     using AMXProductsCatalog.Core.Domain.Entities.Products;
     using AMXProductsCatalog.Core.Domain.Entities.Stocks;
+    using AMXProductsCatalog.Core.Domain.Entities.Users;
+    using AMXProductsCatalog.Views.Authentication;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Request;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Response;
     using AMXProductsCatalog.Views.Orders.GetOrder.Response;
@@ -20,6 +23,7 @@ namespace AMXProductsCatalog.Automapper
     using AMXProductsCatalog.Views.Products.GetCar.Response;
     using AMXProductsCatalog.Views.Products.UpdateCar.Request;
     using AMXProductsCatalog.Views.Stocks.GetStock.Response;
+    using AMXProductsCatalog.Views.Users;
 
     public class ProductsCatalogProfile : Profile
     {
@@ -28,6 +32,21 @@ namespace AMXProductsCatalog.Automapper
             MapCarProduct();
             MapStock();
             MapOrder();
+            MapUser();
+        }
+
+        private void MapUser()
+        {
+            CreateMap<UserDTO, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<User, UserEntity>();
+
+            CreateMap<UserEntity, User>();
+
+            CreateMap<UserAuthenticationDTO, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Role, opt => opt.Ignore());
         }
 
         private void MapOrder()

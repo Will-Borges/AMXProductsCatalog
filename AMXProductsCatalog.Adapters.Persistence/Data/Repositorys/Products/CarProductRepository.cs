@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
+﻿namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
     using AMXProductsCatalog.Core.Domain.Domains.Generics.Ramdom;
@@ -32,8 +30,6 @@ namespace AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products
         {
             try
             {
-                //IOrderedQueryable
-                //var query = (IOrderedQueryable<CarProductEntity>)AMXDatabase.Cars.OrderBy(c => c.Id);
                 IQueryable<CarProductEntity> query = AMXDatabase.Cars.AsQueryable().OrderBy(c => c.Id);
                 
                 if (pageSize <= 0 || pageNumber <= 0)

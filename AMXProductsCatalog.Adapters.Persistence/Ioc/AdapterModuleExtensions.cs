@@ -5,6 +5,7 @@ namespace AMXProductsCatalog.Adapters.Persistence.Ioc
     using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Orders;
     using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Products;
     using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Stocks;
+    using AMXProductsCatalog.Adapters.Persistence.Data.Repositorys.Users;
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
 
     public static class AdapterModuleExtensions
@@ -14,6 +15,7 @@ namespace AMXProductsCatalog.Adapters.Persistence.Ioc
             services.AddScoped<ICarProductRepository, CarProductRepository>();
             services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }

@@ -4,6 +4,7 @@
     using AMXProductsCatalog.Presenters.Orders;
     using AMXProductsCatalog.Presenters.Products;
     using AMXProductsCatalog.Presenters.Stocks;
+    using AMXProductsCatalog.Presenters.Users;
 
     public static class PortsModuleExtensions
     {
@@ -12,6 +13,7 @@
             services.AddScoped<ICarProductPresenter, CarProductPresenter>();
             services.AddScoped<IStockPresenter, StockPresenter>();
             services.AddScoped<IOrderPresenter, OrderPresenter>();
+            services.AddScoped<IUserPresenter, UserPresenter>();
 
             return services;
         }
