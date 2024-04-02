@@ -7,5 +7,6 @@
     {
         Task<Order> CreateOrder(CreateOrder[] orders);
         Task<Order> GetOrderById(long id);
+        Task<bool> ConfirmOrderById(long id);
     }
 }

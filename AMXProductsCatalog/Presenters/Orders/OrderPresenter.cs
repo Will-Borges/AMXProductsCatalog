@@ -42,12 +42,8 @@ namespace AMXProductsCatalog.Presenters.Orders
 
         public async Task<bool> ConfirmOrderById(long id) //validar a entrada dos dados
         {
-            //var order = await _orderService.GetOrderById(id);
-
-            //var orderResult = _mapper.Map<GetOrderResponseDTO>(order);
-            //return orderResult;
-
-            return true;
+            var confirmOrderSucess = await _orderService.ConfirmOrderById(id);
+            return confirmOrderSucess;
         }
     }
 }

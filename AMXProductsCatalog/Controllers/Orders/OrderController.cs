@@ -57,15 +57,13 @@ namespace AMXProductsCatalog.Controllers.Orders
             }
         }
 
-        [HttpGet("ConfirmOrder")]
+        [HttpPut("ConfirmOrder")]
         public async Task<IActionResult> ConfirmOrderById([FromQuery] long id)
         {
             try
             {
-                var order = await _orderPresenter.GetOrderById(id);
-
-                string json = JsonConvert.SerializeObject(order, _jsonSerializerSettings);
-                return Ok(json);
+                var confirmOrderSucess = await _orderPresenter.ConfirmOrderById(id);
+                return Ok(confirmOrderSucess);
             }
             catch (Exception e)
             {
@@ -94,7 +92,7 @@ namespace AMXProductsCatalog.Controllers.Orders
             Listar Todos os Pedidos:
                 Método: GET
                 Endpoint: /api/pedidos
-                Descrição: Retorna uma lista de todos os pedidos.
+                Descrição: Retorna uma lista de todos os pedidos. *****
          */
     }
 }

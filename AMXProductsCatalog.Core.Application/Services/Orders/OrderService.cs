@@ -53,28 +53,33 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             return order;
         }
 
-        //public async Task<bool> ConfirmOrderById(long id)
-        //{
-        //    var orderEntity = await RepositoryGetOrderById(id);
+        public async Task<bool> ConfirmOrderById(long id)
+        {
+            var orderEntity = await RepositoryGetOrderById(id);
 
-        //    foreach (var itemId in orderEntity.ItemsId)
-        //    {
-        //        var stockItem = await RepositoryGetItemStockById(itemId);
+            foreach (var itemId in orderEntity.OrderItemsId)
+            {
+                var orderItems = await _orderRepository.GetOrderItemById(itemId);
+                var stockItem = await RepositoryGetItemStockById(orderItems.ItemId);
 
-        //        await UpdateQuantityStock(stockItem);
-        //        _stockRepository.UpdateQuantityStockItem(stockItem.Id, stockItem.Quantity);
-        //    }
+                await UpdateQuantityStock(stockItem, orderItems.Quantity);
+            }
 
-        //    var updateWithSucess = _orderRepository.UpdateOrder(orderEntity);
-        //}
+            orderEntity.Status = OrderStatus.Confirmed;
+            var updateWithSucess = await _orderRepository.UpdateOrder(orderEntity);
 
-        //private Task UpdateQuantityStock(StockItemEntity stockItem, long quantity)
-        //{
-        //    if ((stockItem.Quantity - quantity) >= 0)
-        //    {
+            return updateWithSucess;
+        }
 
-        //    }
-        //}
+        private async Task UpdateQuantityStock(StockItemEntity stockItem, int quantity)
+        {
+            if (!VerifyQuantityIsValid(stockItem.Quantity, quantity))
+            {
+                throw new InvalidOperationException($"The quantity for this order is no longer valid.");
+            }
+
+            await _stockRepository.UpdateQuantityStockItem(stockItem.Id, stockItem.Quantity);
+        }
 
         private async Task<OrderEntity> RepositoryGetOrderById(long id)
         {
@@ -156,7 +161,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             {
                 var order = orders.FirstOrDefault(q => q.ItemId == item.Id);
 
-                if (VerifyQuantity(item.Quantity, order!.Quantity))
+                if (!VerifyQuantityIsValid(item.Quantity, order!.Quantity))
                 {
                     throw new InvalidOperationException($"Quantity of itemId {order.ItemId} invalid.");
                 }
@@ -168,9 +173,9 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             return orderItems.ToArray();
         }
 
-        private bool VerifyQuantity(int itemQuantity, int orderQuantity)
+        private bool VerifyQuantityIsValid(int itemQuantity, int orderQuantity)
         {
-            return (itemQuantity - orderQuantity) < 0;
+            return (itemQuantity - orderQuantity) > 0;
         }
 
         private async Task<StockItem[]> GetStockItem(CreateOrder[] orders)
