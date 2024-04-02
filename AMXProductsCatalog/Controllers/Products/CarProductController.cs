@@ -21,8 +21,8 @@ namespace AMXProductsCatalog.Controllers.Products
 
         [HttpPost]
         [Route("CreateCarProduct")]
-       // [Authorize(Roles = "manager")]
-        [Authorize(Policy = "RequiredManager")]
+        [Authorize(Roles = "manager")]
+        //[Authorize(Policy = "RequiredManager")]
         public async Task<IActionResult> CreateCarProduct([FromBody] CreateCarProductRequestDTO CarProductDto)
         {
             try
