@@ -167,8 +167,4 @@ Clients can see orders addressed to them.
 
 ## Contribuições
 
-Contribuições são bem-vindas! Para maiores detalhes, consulte [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Licença
-
-Este projeto é licenciado sob a [Licença XYZ](LICENSE).
+William Borges.
