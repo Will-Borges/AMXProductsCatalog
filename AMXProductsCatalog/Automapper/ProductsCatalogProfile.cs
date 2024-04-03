@@ -120,15 +120,8 @@ namespace AMXProductsCatalog.Automapper
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
                 .ForMember(dest => dest.LastUpdated, opt => opt.MapFrom(src => src.LastUpdated));
 
-            //CreateMap<StockItemEntity, StockItem>()
-            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-            //    .ForMember(dest => dest.Product.Id, opt => opt.MapFrom(src => src.ItemId))
-            //    .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
-            //    .ForMember(dest => dest.LastUpdated, opt => opt.MapFrom(src => src.LastUpdated));
-
             CreateMap<StockItemEntity, StockItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                //.ForMember(dest => dest.Product, opt => opt.MapFrom(src => new BaseProduct { Id = src.ItemId }))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
                 .ForMember(dest => dest.LastUpdated, opt => opt.MapFrom(src => src.LastUpdated));
         }

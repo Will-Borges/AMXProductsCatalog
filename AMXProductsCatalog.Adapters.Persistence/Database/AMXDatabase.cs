@@ -23,29 +23,4 @@
             Users = new List<UserEntity>();
         }
     }
-
-    //public class AMXDatabase : DbContext
-    //{
-    //    public DbSet<CarProductEntity> Cars { get; set; }
-    //    public DbSet<StockEntity> Stocks { get; set; }
-
-    //    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //    //{
-    //    //    //modelBuilder.Entity<CarProductEntity>();
-    //    //    //modelBuilder.Entity<StockEntity>();
-
-    //    //    //modelBuilder.Entity<StockEntity>().Property(e => e.Id).ValueGeneratedNever();
-
-    //    //    //modelBuilder.Entity<StockEntity>()
-    //    //    //    .Ignore(s => s.StockItems);
-
-    //    //    base.OnModelCreating(modelBuilder);
-    //    //}
-
-
-    //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //    {
-    //        optionsBuilder.UseInMemoryDatabase("InMemoryDatabase");
-    //    }
-    //}
 }

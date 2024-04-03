@@ -73,7 +73,6 @@
 
                 if (car != null)
                 {
-                   // car.ItemId = updatedCar.ItemId;
                     car.Brand = updatedCar.Brand;
                     car.Model = updatedCar.Model;
                     car.Year = updatedCar.Year;

@@ -22,12 +22,6 @@ builder.Services.AddAutoMapper(typeof(ProductsCatalogProfile).Assembly);
 builder.Services.AddCors();
 builder.Services.AddControllers();
 
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("RequiredManager", policy =>
-//          policy.RequireRole("manager"));
-//});
-
 var key = Encoding.ASCII.GetBytes(Settings.Secret);
 builder.Services.AddAuthentication(q =>
 {

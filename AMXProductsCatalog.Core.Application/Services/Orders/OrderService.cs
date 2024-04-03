@@ -32,7 +32,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
         }
 
 
-        public async Task<Order> CreateOrder(CreateOrder[] orders) //trocar os nomes de 'CreateX' para BuildX
+        public async Task<Order> CreateOrder(CreateOrder[] orders) 
         {
             var stockItems = await GetStockItem(orders);
 
@@ -126,7 +126,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
 
         private async Task<long[]> InsertOrderItem(Order order)
         {
-            var orderEntitys = _mapper.Map<OrderItemEntity[]>(order.Items); //QUI TA invertido ta recebendo product ao inves do item
+            var orderEntitys = _mapper.Map<OrderItemEntity[]>(order.Items);
 
             var orderItemIds = new List<long>();
             foreach (var orderEntity in orderEntitys)
@@ -138,7 +138,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             return orderItemIds.ToArray();
         }
 
-        private Order BuildOrder(StockItem[] stockItems, CreateOrder[] orders) //retirar orders
+        private Order BuildOrder(StockItem[] stockItems, CreateOrder[] orders) 
         {
             var orderItem = BuildOrderItem(stockItems, orders);
 

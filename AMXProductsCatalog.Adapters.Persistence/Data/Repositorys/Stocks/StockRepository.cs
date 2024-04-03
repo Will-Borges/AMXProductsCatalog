@@ -38,7 +38,13 @@
                 }
 
                 var stockItem = stock.StockItems.FirstOrDefault(q => q.Id == id);
-                return stockItem; //maybe
+
+                if (stockItem == null)
+                {
+                    return new StockItemEntity();
+                }
+
+                return stockItem; 
             }
             catch (Exception ex)
             {
