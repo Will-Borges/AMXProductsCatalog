@@ -79,16 +79,15 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 -	O pedido só pode ser realizado e confirmado pelo vendedor (‘seller’) ou pelo administrador (‘admin’).
 
-- **Existe quatro status para o pedido**
+-	**Existe quatro status para o pedido**
   - Pending = 1: Status atualizado quando existe algum problema no pedido.
-  - Pending = 1: Status atualizado quando existe algum problema no pedido.
+  - Processing = 2**: Status atualizado quando o pedido é criado com sucesso, indica que o pedido não foi confirmado ainda, com a ideia de mostrar para o cliente o pedido e os valores, para somente após isso realizar a confirmação.
   - Confirmed = 3**: Status atualizado quando o pedido é confirmado pelo cliente.
   - Canceled = 4**: Status atualizado quando o pedido é cancelado pelo cliente.
 
-
 - **CreateOrder**
   - Método: POST
-  - Responsável por criar um pedido.
+  - Responsável por criar um pedido, passando no body o id do item e a quantidade que deseja comprar. Após criar o pedido o status do pedido fica como ‘Processing’.
   - URL: /v1/Order/CreateOrder
   - Body:
     ```json
@@ -105,7 +104,7 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 - **ConfirmOrder**
   - Método: PUT
-  - Responsável por confirmar o pedido que já foi criado.
+  - Responsável por confirmar o pedido que já foi criado e atualizar o estoque.
   - URL: /v1/Order/ConfirmOrder?id=47406
 
 ## User
