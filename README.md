@@ -75,19 +75,19 @@ This project is an API for managing products, inventory, orders, and users.
   - URL: /v1/Stock/UpdateItemStock?id=75046&quantity=12
 
 ## Order
--	O pedido é realizado encima dos itens do estoque e atualiza o estoque conforme o pedido for confirmado.
+-	The order is made based on the items in the inventory and updates the inventory as the order is confirmed.
 
--	O pedido só pode ser realizado e confirmado pelo vendedor (‘seller’) ou pelo administrador (‘admin’).
+-	The order can only be placed and confirmed by the seller ('seller') or by the administrator ('admin').
 
-- **Existe quatro status para o pedido**:
-  - Pending = 1: Status atualizado quando existe algum problema no pedido.
-  - Processing = 2: Status atualizado quando o pedido é criado com sucesso, indica que o pedido não foi confirmado ainda, com a ideia de mostrar para o cliente o pedido e os valores, para somente após isso realizar a confirmação.
-  - Confirmed = 3: Status atualizado quando o pedido é confirmado pelo cliente.
-  - Canceled = 4: Status atualizado quando o pedido é cancelado pelo cliente.
+- **There are four statuses for the order.**:
+  - Pending = 1: Status updated when there is an issue with the order.
+  - Processing = 2: Status updated when the order is successfully created, indicating that the order has not been confirmed yet. This allows showing the order and its values to the customer before confirming it.
+  - Confirmed = 3: Status updated when the order is confirmed by the customer.
+  - Canceled = 4: Status updated when the order is canceled by the customer.
 
 - **CreateOrder**
   - Method: POST
-  - Responsável por criar um pedido, passando no body o id do item e a quantidade que deseja comprar. Após criar o pedido o status do pedido fica como ‘Processing’.
+  - Responsible for creating an order, passing in the request body the ID of the item and the quantity the customer wishes to purchase. After creating the order, the status of the order is set to 'Processing'.
   - URL: /v1/Order/CreateOrder
   - Body:
     ```json
@@ -99,20 +99,20 @@ This project is an API for managing products, inventory, orders, and users.
 
 - **GetOrder**
   - Method: GET
-  - Responsável por buscar um pedido realizado passando o Id pela url.
+  - Responsible for retrieving a placed order by passing the ID through the URL.
   - URL: v1/Order/GetOrder?id=47406
 
 - **ConfirmOrder**
   - Method: PUT
-  - Responsável por confirmar o pedido que já foi criado e atualizar o estoque.
+  - Responsible for confirming the order that has already been created and updating the inventory.
   - URL: /v1/Order/ConfirmOrder?id=47406
 
 ## User
--	Existem três tipos de usuário no sistema ‘admins, sellers e clients’, os administradores tem acesso total ao sistema e todas as funcionalidades, os vendedores conseguem gerenciar os pedidos e o estoque, sendo limitados a atualização do estoque, clientes podem somente consultar os pedidos.
+-	There are three types of users in the system: admins, sellers, and clients. Administrators have full access to the system and all functionalities. Sellers can manage orders and inventory, but are limited to updating the inventory. Clients can only view their orders.
 
 - **CreateUser**
   - Method: POST
-  - Responsável por criar um usuário de acesso.
+  - Responsible for creating an access user.
   - URL: /v1/User/CreateUser
   - Body:
     ```json
@@ -125,7 +125,7 @@ This project is an API for managing products, inventory, orders, and users.
 
 - **Authenticate**
   - Method: POST
-  - Responsável por realizar o login de autenticação, retornando um token de acesso
+  - Responsible for performing authentication login, returning an access token.
   - URL: /v1/AuthenticationController/Authenticate
   - Body:
     ```json
@@ -135,23 +135,7 @@ This project is an API for managing products, inventory, orders, and users.
     }
     ```
 
-## Requisitos
-
-Fornecer funcionalidades (endpoints) para lidar com Produtos (catálogo), Estoque e Pedidos:
-
-Cada tipo de entidade deve ter pelo menos três endpoints/funcionalidades:
-- **Listagem**: Uma página para mostrar todos os registros de um tipo de entidade, permitindo que o usuário aplique alguns filtros. A paginação é opcional, mas recomendada.
-- **Criar/editar**: Capacidade de criar ou editar um registro.
-- **Excluir**: Excluir um registro.
-- **Detalhes**: Mostrar os detalhes de um registro.
-
-Fornecer uma página de login:
-- Os usuários têm pelo menos um desses papéis de acesso: Admin, Vendedor e Cliente.
-
-Controle de acesso:
-- Os administradores podem acessar todas as funcionalidades e gerenciar todos os registros.
-- Os vendedores podem criar e gerenciar qualquer cliente. Além disso, podem criar pedidos para qualquer cliente e gerenciar seus próprios pedidos.
-- Os clientes podem ver os pedidos endereçados a eles.
+## Requirements
 
 Provide features (endpoints) to deal with Products (catalog), Stock, and Orders:
 
@@ -170,16 +154,16 @@ Sellers can create and manage any client. Moreover, they can create orders for a
 Clients can see orders addressed to them.
 
 
-## Como Usar
+## How to Use
 
-1. Crie um user - Enpoint CreateUser
-2. Faça a autenticação - Enpoint Authenticate
-3. Utilize o token para realizar o acesso as funcionalidades
-4. Crie um produto que sera adicionado no stock - Endpoint CreateCarProduct
-5. Busque o estoque para pegar o Id do item - Endpoint GetStock
-6. Atualize o item do estoque, adicionando a quantidade que tem no estoque, passando o Id do item (5) - Endpoint UpdateItemStock
-7. Crie um pedido, passando o Id do item que deseja comprar e a quantidade - Endpoint CreateOrder
-8. Confirme o pedido, passando o Id do pedido que veio ao criar ele (7) - Endpoint ConfirmOrder
+1. Create a user - Endpoint CreateUser
+2. Perform authentication - Endpoint Authenticate
+3. Use the token to access the functionalities
+4. Create a product that will be added to the inventory - Endpoint CreateCarProduct
+5. Retrieve the inventory to get the ID of the item - Endpoint GetStock
+6. Update the inventory item, adding the quantity available in the stock, passing the ID of the item from step (5) - Endpoint UpdateItemStock
+7. Create an order, passing the ID of the item you wish to purchase and the quantity - Endpoint CreateOrder
+8. Confirm the order, passing the ID of the order created in step (7) - Endpoint ConfirmOrder
 
 ## Contribuições
 
