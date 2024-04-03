@@ -5,14 +5,11 @@ namespace AMXProductsCatalog.Core.Domain.Abstractions.Products
 {
     using AMXProductsCatalog.Core.Domain.Entities.Products;
 
-    [DataContract]
+
     [SwaggerSubTypes(typeof(CarProductEntity), Discriminator = "productType")]
     public class BaseProduct
     {
-        [DataMember]
-        public long Id { get; set; } 
-
-        [DataMember]
+        public long Id { get; set; } //priv
         public decimal Price { get; set; }
     }
 }

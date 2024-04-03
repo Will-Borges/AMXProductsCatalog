@@ -4,17 +4,10 @@ namespace AMXProductsCatalog.Core.Domain.Entities.Products
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Products;
 
-    [DataContract]
     public class CarProductEntity : BaseProduct
     {
-
-        [DataMember]
         public string Brand { get; set; }
-
-        [DataMember]
         public string Model { get; set; }
-
-        [DataMember]
         public int Year { get; set; }
 
 

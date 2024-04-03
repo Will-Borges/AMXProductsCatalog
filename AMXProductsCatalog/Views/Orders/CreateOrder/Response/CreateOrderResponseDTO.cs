@@ -4,19 +4,11 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
 {
     using AMXProductsCatalog.Core.Domain.Domains.Orders;
 
-    [DataContract]
     public class CreateOrderResponseDTO
     {
-        [DataMember]
         public long Id { get; set; }
-
-        [DataMember]
         public CreateOrderItemResponseDTO[] Items { get; set; }
-
-        [DataMember]
         public decimal TotalPrice { get; set; }
-
-        [DataMember]
         public OrderStatus Status { get; set; }
 
 

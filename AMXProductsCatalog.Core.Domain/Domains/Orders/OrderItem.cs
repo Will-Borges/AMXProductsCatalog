@@ -3,16 +3,11 @@ using System.Runtime.Serialization;
 
 namespace AMXProductsCatalog.Core.Domain.Domains.Orders
 {
-    [DataContract]
+
     public class OrderItem
     {
-        [DataMember]
         public long Id { get; }
-
-        [DataMember]
         public BaseProduct Product { get; set; }
-
-        [DataMember]
         public int Quantity { get; }
 
 

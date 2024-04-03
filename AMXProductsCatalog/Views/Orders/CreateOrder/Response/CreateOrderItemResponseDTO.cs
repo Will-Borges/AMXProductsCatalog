@@ -4,13 +4,9 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Products;
 
-    [DataContract]
     public class CreateOrderItemResponseDTO
     {
-        [DataMember]
         public BaseProduct Product { get; set; }
-
-        [DataMember]
         public int Quantity { get; set; }
 
 
