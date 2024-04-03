@@ -77,8 +77,8 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
             {
                 throw new InvalidOperationException($"The quantity for this order is no longer valid.");
             }
-
-            await _stockRepository.UpdateQuantityStockItem(stockItem.Id, stockItem.Quantity);
+            var quantityUpdate = stockItem.Quantity - quantity;
+            await _stockRepository.UpdateQuantityStockItem(stockItem.Id, quantityUpdate);
         }
 
         private async Task<OrderEntity> RepositoryGetOrderById(long id)
@@ -175,7 +175,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
 
         private bool VerifyQuantityIsValid(int itemQuantity, int orderQuantity)
         {
-            return (itemQuantity - orderQuantity) > 0;
+            return (itemQuantity - orderQuantity) >= 0;
         }
 
         private async Task<StockItem[]> GetStockItem(CreateOrder[] orders)

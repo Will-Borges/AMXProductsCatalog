@@ -40,7 +40,7 @@ namespace AMXProductsCatalog.Presenters.Orders
             return orderResult;
         }
 
-        public async Task<bool> ConfirmOrderById(long id) //validar a entrada dos dados
+        public async Task<bool> ConfirmOrderById(long id) //validar a entrada dos dados, verificar se o pedido ja nao foi confirmado
         {
             var confirmOrderSucess = await _orderService.ConfirmOrderById(id);
             return confirmOrderSucess;

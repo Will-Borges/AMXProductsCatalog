@@ -5,6 +5,7 @@ namespace AMXProductsCatalog.Controllers.Orders
 {
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Orders.CreateOrder.Request;
+    using Microsoft.AspNetCore.Authorization;
 
     [Route("v1/Order")]
     [ApiController]
@@ -24,8 +25,9 @@ namespace AMXProductsCatalog.Controllers.Orders
             };
         }
 
-
+        
         [HttpPost("CreateOrder")]
+        [Authorize(Roles = "admin,seller")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequestDTO[] dtos) 
         {
             try
@@ -42,6 +44,7 @@ namespace AMXProductsCatalog.Controllers.Orders
         }
 
         [HttpGet("GetOrder")]
+        [Authorize(Roles = "admin,seller,client")]
         public async Task<IActionResult> GetOrderById([FromQuery] long id)
         {
             try
@@ -58,6 +61,7 @@ namespace AMXProductsCatalog.Controllers.Orders
         }
 
         [HttpPut("ConfirmOrder")]
+        [Authorize(Roles = "admin,seller")]
         public async Task<IActionResult> ConfirmOrderById([FromQuery] long id)
         {
             try

@@ -5,6 +5,7 @@ namespace AMXProductsCatalog.Controllers.Users
 {
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Users;
+    using Microsoft.AspNetCore.Authorization;
 
     [Route("v1/User")]
     [ApiController]
@@ -20,6 +21,7 @@ namespace AMXProductsCatalog.Controllers.Users
 
 
         [HttpPost("CreateUser")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateUser([FromBody] UserDTO user)
         {
             try

@@ -4,6 +4,7 @@ namespace AMXProductsCatalog.Controllers.Authentications
 {
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Authentication;
+    using Microsoft.AspNetCore.Authorization;
 
     [Route("v1/AuthenticationController")]
     [ApiController]
@@ -17,7 +18,7 @@ namespace AMXProductsCatalog.Controllers.Authentications
             _userPresenter = userPresenter; 
         }
 
-
+        [AllowAnonymous]
         [HttpPost("Authenticate")]
         public async Task<IActionResult> Authenticate([FromBody] UserAuthenticationDTO userDto)
         {

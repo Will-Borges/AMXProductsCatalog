@@ -21,8 +21,7 @@ namespace AMXProductsCatalog.Controllers.Products
 
         [HttpPost]
         [Route("CreateCarProduct")]
-        [Authorize(Roles = "manager")]
-        //[Authorize(Policy = "RequiredManager")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateCarProduct([FromBody] CreateCarProductRequestDTO CarProductDto)
         {
             try
@@ -37,6 +36,7 @@ namespace AMXProductsCatalog.Controllers.Products
         }
 
         [HttpGet("GetAllCarProducts")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetAllCarProducts([FromQuery] int pageSize, [FromQuery] int pageNumber)
         {
             try
@@ -51,6 +51,7 @@ namespace AMXProductsCatalog.Controllers.Products
         }
 
         [HttpGet("GetCarProductById")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetCarProductById([FromQuery] long id)
         {
             try
@@ -65,6 +66,7 @@ namespace AMXProductsCatalog.Controllers.Products
         }
 
         [HttpDelete("DeleteCarProductById")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteCarProductById([FromQuery] int id)
         {
             try
@@ -79,6 +81,7 @@ namespace AMXProductsCatalog.Controllers.Products
         }
 
         [HttpPut("UpdateCarProduct")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateCarProduct([FromBody] UpdateCarProductRequestDTO CarProductDto)
         {
             try

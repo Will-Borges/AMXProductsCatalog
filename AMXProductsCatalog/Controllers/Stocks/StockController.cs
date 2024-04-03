@@ -4,7 +4,8 @@ using Newtonsoft.Json;
 namespace AMXProductsCatalog.Controllers.Stocks
 {
     using AMXProductsCatalog.Presenters.Interfaces;
-    
+    using Microsoft.AspNetCore.Authorization;
+
     [Route("v1/Stock")]
     [ApiController]
     public class StockController : ControllerBase
@@ -25,6 +26,7 @@ namespace AMXProductsCatalog.Controllers.Stocks
 
 
         [HttpGet("GetStock")]
+        [Authorize(Roles = "admin,seller")]
         public async Task<IActionResult> GetStock()
         {
             try
@@ -41,6 +43,7 @@ namespace AMXProductsCatalog.Controllers.Stocks
         }
 
         [HttpGet("GetItemStock")]
+        [Authorize(Roles = "admin,seller")]
         public async Task<IActionResult> GetItemStockById([FromQuery] long id)
         {
             try
@@ -57,6 +60,7 @@ namespace AMXProductsCatalog.Controllers.Stocks
         }
 
         [HttpPut("UpdateItemStock")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateQuantityStockItem([FromQuery] long id, [FromQuery] int quantity)
         {
             try
