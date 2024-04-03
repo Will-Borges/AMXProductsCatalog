@@ -137,19 +137,21 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 ## Requisitos
 
-1- Provide features (enpoints) to deal with Products (catalog), Stock and Orders. Each entity
-type should have at least three endpoints/features:
-▪ List page to show all records of an entity type allowing the user to apply some filters.
-Paging is optional but nice.
-▪ Create/edit capability
-▪ Delete an entity
-▪ Details of the entity
-2. Provide a Sign in page. Users have at least one of these access roles: Admin, Seller and Client.
-3. Access control:
-▪ Admins can access all features and manage all records.
-▪ Sellers can create and manage any client. Moreover they can create orders for any client
-and manage their own orders.
-▪ Clients can see orders addressed to him.
+Provide features (endpoints) to deal with Products (catalog), Stock, and Orders:
+
+Each entity type should have at least three endpoints/features:
+List page: To show all records of an entity type, allowing the user to apply some filters. Paging is optional but nice.
+Create/edit capability: Ability to create or edit a record.
+Delete an entity: Delete a record.
+Details of the entity: Show the details of a record.
+Provide a Sign-in page:
+
+Users have at least one of these access roles: Admin, Seller, and Client.
+Access control:
+
+Admins can access all features and manage all records.
+Sellers can create and manage any client. Moreover, they can create orders for any client and manage their own orders.
+Clients can see orders addressed to them.
 
 
 ## Configuração
