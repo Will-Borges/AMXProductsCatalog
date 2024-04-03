@@ -1,4 +1,4 @@
-# AMXProductsCatalog
+# AMXProductsCatalog - English
 
 This project is an API for managing products, inventory, orders, and users.
 
@@ -173,7 +173,7 @@ William Borges
 ----------------------------------------------------------------------------------------
 
 
-# AMXProductsCatalog
+# AMXProductsCatalog - Português
 
 Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuários.
 
