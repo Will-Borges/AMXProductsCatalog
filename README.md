@@ -185,7 +185,7 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 - **CreateCarProduct**
   - Método: POST
-  - Responsável por Criar o produto. Na criação do primeiro produto o estoque é criado, armazenando o produto dentro do estoque e com a quantidade de produtos zerados.
+  - Responsável por Criar o produto. Na criação do primeiro produto o estoque tambem é criado, armazenando o produto dentro do estoque e com a quantidade de produtos zerados.
   - URL: /v1/CarProduct/CreateCarProduct
   - Body:
     ```json
