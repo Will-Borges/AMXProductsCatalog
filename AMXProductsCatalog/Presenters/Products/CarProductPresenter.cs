@@ -3,6 +3,7 @@
 namespace AMXProductsCatalog.Presenters.Products
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Application.Services;
+    using AMXProductsCatalog.Core.Domain.Domains.Generics.Verification;
     using AMXProductsCatalog.Core.Domain.Domains.Products;
     using AMXProductsCatalog.Core.Domain.Domains.Products.UpdateCar;
     using AMXProductsCatalog.Presenters.Interfaces;
@@ -25,6 +26,8 @@ namespace AMXProductsCatalog.Presenters.Products
 
         public async Task<long> CreateCarProduct(CreateCarProductRequestDTO carRequestDto)
         {
+            ValueCheckerPresenter.CheckFor(carRequestDto);
+
             ValidPriceCar(carRequestDto.Price);
 
             var car = _mapper.Map<CarProduct>(carRequestDto);
@@ -43,6 +46,8 @@ namespace AMXProductsCatalog.Presenters.Products
 
         public async Task<GetCarProductResponseDTO> GetCarProductById(long id)
         {
+            ValueCheckerPresenter.CheckFor(id);
+
             var carProducts = await _carProductService.GetCarProductById(id);
 
             var carsResponse = _mapper.Map<GetCarProductResponseDTO>(carProducts);
@@ -51,12 +56,16 @@ namespace AMXProductsCatalog.Presenters.Products
 
         public async Task<bool> DeleteCarProductById(long id)
         {
+            ValueCheckerPresenter.CheckFor(id);
+
             var deleteWithSucess = await _carProductService.DeleteCarProductById(id);
             return deleteWithSucess;
         }
 
         public async Task<bool> UpdateCarProduct(UpdateCarProductRequestDTO carRequestDto)
         {
+            ValueCheckerPresenter.CheckFor(carRequestDto);
+
             var carsRequest = _mapper.Map<UpdateCarProductRequest>(carRequestDto);
 
             var updateWithSucess = await _carProductService.UpdateCarProduct(carsRequest);

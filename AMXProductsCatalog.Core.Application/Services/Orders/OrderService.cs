@@ -4,8 +4,6 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
 {
     using AMXProductsCatalog.Core.Domain.Abstractions.Application.Services;
     using AMXProductsCatalog.Core.Domain.Abstractions.Repository;
-    using AMXProductsCatalog.Core.Domain.Domains.Customers;
-    using AMXProductsCatalog.Core.Domain.Domains.Generics.Ramdom;
     using AMXProductsCatalog.Core.Domain.Domains.Orders;
     using AMXProductsCatalog.Core.Domain.Domains.Orders.CreateOrders;
     using AMXProductsCatalog.Core.Domain.Domains.Products;
@@ -91,7 +89,6 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
         {
             var order = new Order(
                 orderEntity.Id,
-                new Customer(), //revisar
                 orderEntity.TotalPrice,
                 orderEntity.Status);
 
@@ -145,7 +142,7 @@ namespace AMXProductsCatalog.Core.Application.Services.Orders
         {
             var orderItem = BuildOrderItem(stockItems, orders);
 
-            var order = new Order(new Customer()); //revisar
+            var order = new Order(); 
 
             order.SetStatus(OrderStatus.Processing);
             order.SetItems(orderItem);

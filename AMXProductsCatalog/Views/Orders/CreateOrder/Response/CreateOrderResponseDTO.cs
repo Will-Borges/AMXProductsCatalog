@@ -2,7 +2,6 @@
 
 namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
 {
-    using AMXProductsCatalog.Core.Domain.Domains.Customers;
     using AMXProductsCatalog.Core.Domain.Domains.Orders;
 
     [DataContract]
@@ -10,9 +9,6 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
     {
         [DataMember]
         public long Id { get; set; }
-
-        [DataMember]
-        public Customer Customer { get; set; } // revisar
 
         [DataMember]
         public CreateOrderItemResponseDTO[] Items { get; set; }
@@ -26,10 +22,9 @@ namespace AMXProductsCatalog.Views.Orders.CreateOrder.Response
 
         public CreateOrderResponseDTO() { }
 
-        public CreateOrderResponseDTO(long id, Customer customer, CreateOrderItemResponseDTO[] items, decimal totalPrice, OrderStatus status)
+        public CreateOrderResponseDTO(long id, CreateOrderItemResponseDTO[] items, decimal totalPrice, OrderStatus status)
         {
             Id = id;
-            Customer = customer;
             Items = items;
             TotalPrice = totalPrice;
             Status = status;

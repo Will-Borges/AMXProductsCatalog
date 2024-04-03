@@ -4,6 +4,7 @@ namespace AMXProductsCatalog.Presenters.Users
 {
     using AMXProductsCatalog.Authentication;
     using AMXProductsCatalog.Core.Domain.Abstractions.Application.Services;
+    using AMXProductsCatalog.Core.Domain.Domains.Generics.Verification;
     using AMXProductsCatalog.Core.Domain.Domains.Users;
     using AMXProductsCatalog.Presenters.Interfaces;
     using AMXProductsCatalog.Views.Authentication;
@@ -24,6 +25,7 @@ namespace AMXProductsCatalog.Presenters.Users
 
         public async Task<bool> CreateUser(UserDTO userDto)
         {
+            ValueCheckerPresenter.CheckFor(userDto);
             var user = _mapper.Map<User>(userDto);
 
             var createWithSucess = await _userService.CreateUser(user);
@@ -32,6 +34,7 @@ namespace AMXProductsCatalog.Presenters.Users
 
         public async Task<dynamic> AuthenticateUser(UserAuthenticationDTO userDto)
         {
+            ValueCheckerPresenter.CheckFor(userDto);
             var user = await GetUser(userDto);
 
             var token = TokenService.GenerateToken(user);

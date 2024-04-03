@@ -71,7 +71,6 @@ namespace AMXProductsCatalog.Automapper
 
             CreateMap<Order, CreateOrderResponseDTO>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
-                .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
@@ -81,7 +80,6 @@ namespace AMXProductsCatalog.Automapper
 
             CreateMap<Order, GetOrderResponseDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Customer, opt => opt.MapFrom(src => src.Customer))
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
@@ -90,7 +88,6 @@ namespace AMXProductsCatalog.Automapper
 
             CreateMap<Order, OrderEntity>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id))
                 .ForMember(dest => dest.OrderItemsId, opt => opt.MapFrom(src => src.Items.Select(item => item.Id).ToArray()))
                 .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
