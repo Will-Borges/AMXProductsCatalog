@@ -79,12 +79,12 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 -	O pedido só pode ser realizado e confirmado pelo vendedor (‘seller’) ou pelo administrador (‘admin’).
 
-
--	**Existe quatro status para o pedido**
+- **Existe quatro status para o pedido**
   - Pending = 1: Status atualizado quando existe algum problema no pedido.
-  - Processing = 2**: Status atualizado quando o pedido é criado com sucesso, indica que o pedido não foi confirmado ainda, com a ideia de mostrar para o cliente o pedido e os valores, para somente após isso realizar a confirmação.
+  - Pending = 1: Status atualizado quando existe algum problema no pedido.
   - Confirmed = 3**: Status atualizado quando o pedido é confirmado pelo cliente.
   - Canceled = 4**: Status atualizado quando o pedido é cancelado pelo cliente.
+
 
 - **CreateOrder**
   - Método: POST
