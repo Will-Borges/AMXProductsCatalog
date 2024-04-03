@@ -108,6 +108,7 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
   - URL: /v1/Order/ConfirmOrder?id=47406
 
 ## User
+-	Existem três tipos de usuário no sistema ‘admins, sellers e clients’, os administradores tem acesso total ao sistema e todas as funcionalidades, os vendedores conseguem gerenciar os pedidos e o estoque, sendo limitados a atualização do estoque, clientes podem somente consultar os pedidos.
 
 - **CreateUser**
   - Método: POST
@@ -124,7 +125,7 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 - **Authenticate**
   - Método: POST
-  - Responsável por realizar o login de autenticação.
+  - Responsável por realizar o login de autenticação, retornando um token de acesso
   - URL: /v1/AuthenticationController/Authenticate
   - Body:
     ```json
