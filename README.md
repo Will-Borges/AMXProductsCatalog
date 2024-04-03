@@ -165,11 +165,9 @@ Clients can see orders addressed to them.
 7. Create an order, passing the ID of the item you wish to purchase and the quantity - Endpoint CreateOrder
 8. Confirm the order, passing the ID of the order created in step (7) - Endpoint ConfirmOrder
 
-## Contribuições
+## Contributions
 
 William Borges
-
-
 
 
 ----------------------------------------------------------------------------------------
