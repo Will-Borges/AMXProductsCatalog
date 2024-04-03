@@ -7,10 +7,10 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 - Os produtos servem como base de uma vitrine para que o estoque possa utilizar e se gerenciar.
 
 - O sistema aceita inúmeros tipos de produtos desde que herdem de ‘BaseProduct’, utilizando de polimorfismo para isso.
-\n
+
 - **CreateCarProduct**
   - Método: POST
-  - Responsável por criar o produto.
+  - Responsável por Criar o produto. Na criação do primeiro produto o estoque é criado, armazenando o produto dentro do estoque e com a quantidade de produtos zerados.
   - URL: /v1/CarProduct/CreateCarProduct
   - Body:
     ```json
@@ -24,22 +24,22 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 - **GetCarProductById**
   - Método: GET
-  - Responsável por pegar o produto pelo Id.
+  - Responsável por pegar o produto pelo Id, passando esse Id pela url.
   - URL: /v1/CarProduct/GetCarProductById?id=93303
 
 - **GetAllCarProducts**
   - Método: GET
-  - Responsável por pegar todos os produtos cadastrados.
+  - Responsável por pegar todos os produtos que foram cadastrados. A paginação não é obrigatória, mas podemos passar o pageSize e pageNumber pela Url, caso um deles não for valido ou nullo se realizara a busca sem a paginação.
   - URL: /v1/CarProduct/GetAllCarProducts?pageSize=0&pageNumber=0
 
 - **DeleteCarProductById**
   - Método: DELETE
-  - Responsável por deletar o produto pelo Id.
+  - Responsável por deletar o produto pelo Id, passando esse Id pela url.
   - URL: /v1/CarProduct/DeleteCarProductById?id=18342
 
 - **UpdateCarProduct**
   - Método: PUT
-  - Responsável por atualizar o produto.
+  - Responsável por atualizar o produto, passando o id do produto e o resto dos dados a serem atualizados.
   - URL: /v1/CarProduct/UpdateCarProduct
   - Body:
     ```json
@@ -53,6 +53,11 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
     ```
 
 ## Stock
+-	O estoque é responsável por armazenar os itens de produtos dentro dele, sendo responsável por gerenciar a quantidade e as transações de pedido.
+
+-	O estoque é criado de forma automática, a partir da criação do primeiro produto no sistema.
+
+-	Nesse caso em especifico utilizamos apenas um estoque, mas a estrutura foi feita para que possa expandir para mais estoques caso a empresa tenha filiais ou pela própria necessidade do cliente. 
 
 - **GetStock**
   - Método: GET
@@ -66,10 +71,21 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 - **UpdateItemStock**
   - Método: UPDATE
-  - Responsável por atualizar a quantidade de um item do estoque.
+  - Responsável por atualizar a quantidade de um item do estoque, passando o Id do item e a quantidade, ambos obrigatórios. Sendo possível atualizar a quantidade conforme o senário e as necessidade do cliente.
   - URL: /v1/Stock/UpdateItemStock?id=75046&quantity=12
 
 ## Order
+-	O pedido é realizado encima dos itens do estoque e atualiza o estoque conforme o pedido for confirmado.
+
+-	O pedido só pode ser realizado e confirmado pelo vendedor (‘seller’) ou pelo administrador (‘admin’).
+
+
+-	Existe quatro status para o pedido: 
+
+- **Pending = 1**: Status atualizado quando existe algum problema no pedido.
+- **Processing = 2**: Status atualizado quando o pedido é criado com sucesso, indica que o pedido não foi confirmado ainda, com a ideia de mostrar para o cliente o pedido e os valores, para somente após isso realizar a confirmação.
+- **Confirmed = 3**: Status atualizado quando o pedido é confirmado pelo cliente.
+- **Canceled = 4**: Status atualizado quando o pedido é cancelado pelo cliente.
 
 - **CreateOrder**
   - Método: POST
