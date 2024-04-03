@@ -154,14 +154,16 @@ Sellers can create and manage any client. Moreover, they can create orders for a
 Clients can see orders addressed to them.
 
 
-## Configuração
-
-1. [Instruções de instalação]
-2. [Instruções de configuração]
-
 ## Como Usar
 
-1. [Instruções de uso]
+1. Crie um user - Enpoint CreateUser
+2. Faça a autenticação - Enpoint Authenticate
+3. Utilize o token para realizar o acesso as funcionalidades
+4. Crie um produto que sera adicionado no stock - Endpoint CreateCarProduct
+5. Busque o estoque para pegar o Id do item - Endpoint GetStock
+6. Atualize o item do estoque, adicionando a quantidade que tem no estoque, passando o Id do item (5) - Endpoint UpdateItemStock
+7. Crie um pedido, passando o Id do item que deseja comprar e a quantidade - Endpoint CreateOrder
+8. Confirme o pedido, passando o Id do pedido que veio ao criar ele (7) - Endpoint ConfirmOrder
 
 ## Contribuições
 
