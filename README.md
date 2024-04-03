@@ -4,9 +4,9 @@ Este projeto é uma API para gerenciamento de produtos, estoque, pedidos e usuá
 
 ## Product
 
--Os produtos servem como base de uma vitrine para que o estoque possa utilizar e se gerenciar.
+- Os produtos servem como base de uma vitrine para que o estoque possa utilizar e se gerenciar.
 
--O sistema aceita inúmeros tipos de produtos desde que herdem de ‘BaseProduct’, utilizando de polimorfismo para isso.
+- O sistema aceita inúmeros tipos de produtos desde que herdem de ‘BaseProduct’, utilizando de polimorfismo para isso.
 
 
 - **CreateCarProduct**
